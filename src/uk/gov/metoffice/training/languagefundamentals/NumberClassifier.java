@@ -1,4 +1,4 @@
-package uk.gov.metoffice.training;
+package uk.gov.metoffice.training.languagefundamentals;
 
 /**
  * Created by bryn.lloyd on 06/04/2016.
