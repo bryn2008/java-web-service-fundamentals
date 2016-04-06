@@ -7,12 +7,12 @@ public class TimesTables {
 
     public static void main(String[] args) {
 
-        for(int i=0; i<12; i++){
-            System.out.println(i);
-            for (int j = 0; j < 12; j++) {
-                System.out.print(i+ j);
+        for(int i=1; i<=12; i++){
+            for (int k=1; k<=12; k++){
+                System.out.print(i*k);
+                System.out.print(" ");
             }
-
+            System.out.println(" ");
         }
     }
 }
