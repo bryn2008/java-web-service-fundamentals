@@ -6,13 +6,18 @@ package uk.gov.metoffice.training.expressions;
 public class TimesTable {
 
     public static void main(String[] args) {
-
-        for(int i=0; i<12; i++){
-            System.out.println(i);
-            for (int j = 0; j < 12; j++) {
-                System.out.print(i+ j);
+        System.out.format("%4s", "");
+        for (int hdr=1; hdr<=12; ++hdr) {
+            System.out.format("%4d", hdr);
+        }
+        System.out.println();
+        for (int row=1; row<=12; ++row) {
+            System.out.format("%4d", row);
+            for (int col=1; col<=12; ++col) {
+                System.out.format("%4d", row*col);
             }
-
+            System.out.println();
         }
     }
+
 }
