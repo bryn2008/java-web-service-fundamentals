@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Program Structure Solutions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Program Structure - Solutions</h1>
+
+			<p>These are suggested solutions for some of the exercises in this
+				chapter. There are
+				usually several ways to solve a problem and the solutions provided
+				illustrate
+				one approach. 
+			</p>
+<ol>
+
+<li><h2><a id="Guess"/>Guessing Game</h2>
+<pre>
+package solutions;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class MainGuess {
+    public static void main(String[] args) {
+        Random random = new Random();
+        int code = random.nextInt(9)+1;
+        Scanner scanner = new Scanner(System.in);
+        int guess = Integer.MIN_VALUE;
+        do {
+            System.out.print("Guess my code (zero to give up)? ");
+            guess = scanner.nextInt();
+            if (guess == code) {
+                System.out.println("Well done");
+                break;
+            }
+            else if (guess != 0) {
+                if (guess > code) {
+                    System.out.println("Too high");
+                }
+                else {
+                    System.out.println("Too low");
+                }
+                System.out.println("Try again");
+            }
+        } while (guess != 0);
+
+        System.out.format("My code was %d", code);
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Guess">Questions</a></p>
+</li>
+
+<li><h2><a id="Ordnance"/>Projectile Paths</h2>
+<pre>
+package solutions;
+
+public class MainPaths {
+    public static void main(String[] args) {
+        int angle = launchAngle(100, 1000);
+        System.out.format("v=100, r=1000, angle=%d\n",angle );
+        System.out.format("v=100, angle=%d, range=%.2f\n", angle, calcRange(100, angle));
+    }
+
+    private static final double G = 9.81;
+
+    private static int launchAngle(double velocity, double range) {
+        double theta = Math.asin(range * G / Math.pow(velocity, 2)) / 2;
+        return (int)Math.round(Math.toDegrees(theta));
+    }
+
+    private static double calcRange(double velocity, int angle) {
+        double t = Math.toRadians(angle);
+        return 2 * Math.pow(velocity,2) * Math.cos(t) * Math.sin(t) / G;
+    }
+
+}
+</pre>
+
+
+<p><a href="index.html#Ordnance">Questions</a></p>
+</li>
+
+<li><h2><a id="Counting"/>Traditional Counting System</h2>
+<pre>
+package solutions;
+
+import java.util.Random;
+
+public class MainCounting {
+    public static void main(String[] args) {
+        Random random = new Random();
+        for (int i=0; i&lt;10; ++i) {
+            int n = random.nextInt(10)+1;
+            switch (n) {
+                case 1:
+                    System.out.format("%d - one\n", n);
+                    break;
+                case 2:
+                    System.out.format("%d - two\n", n);
+                    break;
+                case 10:
+                    System.out.format("%d - two hands full\n", n);
+                    break;
+                default:
+                    System.out.format("%d - many\n", n);
+                    break;
+
+            }
+        }
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Counting">Questions</a></p>
+</li>
+
+<li><h2><a id="Overload"/>Overloaded Random Number Generators</h2>
+<pre>
+package solutions;
+
+import java.util.Random;
+
+public class MainCounting {
+    private static Random random = new Random();
+
+    private static int generate(int limit) {
+        return random.nextInt(limit)+1;
+    }
+
+    private static int generate(int low, int high) {
+        return random.nextInt(high-low)+low;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(generate(10));
+        System.out.println(generate(1,59));
+    }
+}
+</pre>
+
+<p><a href="index.html#Overload">Questions</a></p>
+</li>
+</ol>
+
+
+		</div>
+
+		<div id="footer">
+			<hr />
+
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

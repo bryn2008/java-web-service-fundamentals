@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Language Fundamentals - Questions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Language Fundamentals - Questions</h1>
+
+			<p>
+				These exercises are designed to expand on the topics introduced
+				in the
+				<strong>Language Fundamentals</strong>
+				chapter of the Java Development training course.
+			</p>
+
+			<p>You can attempt the exercises in any order but the later
+				exercises tend to be more complex and require more time to complete. You
+				are not expected to complete all the exercises in the time available.
+				Just do as many as you can do, or want to do, and
+				try to find time after the course has finished to return to complete
+				these exercises. If you are unsure what to do, or need advice
+				as you work through the exercises then please ask your
+				instructor for additional information.</p>
+			
+			<p>The purpose of these exercises is to write small Java programs that
+use the fundamental flow control structures in the language.
+</p>
+<ol>
+
+<li><h2><a id="Convert"/>Temperature Conversion</h2>
+<p>Write a program to convert Fahrenheit 451 to Celsius where
+the conversion is given by the following formula:
+</p>
+<img src='convert.png' width='277' height='67'/>
+<p>
+You should get the value 232.7 (recurring).
+Extend the program to print out the temperature in Kelvin (Celsius plus 273.15).
+</p>
+
+<p><a href="solutions.html#Convert">Solutions</a></p>
+</li>
+
+<li><h2><a id="Classifier"/>Number Classifier</h2>
+<p>Write a program that generates a random integer between 1 and 99,
+  then print out whether this integer is large (&gt;=67) or medium (&lt;67 and &gt;=33) or
+  small (&lt;33).</p>
+<p>
+You can generate a random number between 1 and 99 using:</p>
+<pre>
+Random random = new Random();
+int number = random.nextInt(98)+1;
+</pre>
+
+<p><a href="solutions.html#Classifier">Solutions</a></p>
+</li>
+
+<li><h2><a id="Countdown"/>Countdown</h2>
+<p>
+    Write a program that uses a <b>while</b> loop to
+    prints a count down sequence starting at 10 and stopping at zero.
+</p>
+<p>
+Refactor (update or amend) your program so that it prompts the user to
+enter the starting number. Use a <b>Scanner</b> object as follows to read
+an integer:
+</p>
+<pre>
+Scanner scanner = new Scanner(System.in);
+int start = scanner.nextInt();
+</pre>
+
+<p><a href="solutions.html#Countdown">Solutions</a></p>
+</li>
+
+<li><h2><a id="Tables"/>Times Tables</h2>
+<p>Use two nested <b>for</b> loops to print out the classic children's times table
+    which initially looks like the following (do not worry about headers
+    or formatting the fields to be the same width):
+</p><pre>
+1 2 3 4 5 6 7 8 9 10 11 12
+2 4 6 8 10 12 14 16 18 20 22 24
+3 6 9 12 15 18 21 24 27 30 33 36
+...
+12 24 36 48 60 72 84 96 108 120 132 144
+</pre>
+<p>
+Use <b>System.out.print</b>() rather than <b>println</b>() to print the numbers on the same line.
+You will need to print a space between each number, and use <b>println()</b> to write out the
+newline at the end of each row of numbers. In a later chapter you will be shown how to use 
+<b>String.format</b>() and <b>Systsem.out.format</b>() to format your output.
+</p>
+
+<p><a href="solutions.html#Tables">Solutions</a></p>
+</li>
+</ol>
+
+		</div>
+
+		<div id="footer">
+			<hr />
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

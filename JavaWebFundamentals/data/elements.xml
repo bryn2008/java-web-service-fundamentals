@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<elements>
+    <element number="1" abbreviation="H">Hydrogen</element>
+    <element number="2" abbreviation="He">Helium</element>
+    <element number="3" abbreviation="Li">Lithium</element>
+    <element number="4" abbreviation="Be">Beryllium</element>
+    <element number="5" abbreviation="B">Boron</element>
+    <element number="6" abbreviation="C">Carbon</element>
+    <element number="7" abbreviation="N">Nitrogen</element>
+    <element number="8" abbreviation="O">Oxygen</element>
+    <element number="9" abbreviation="F">Fluorine</element>
+    <element number="10" abbreviation="Ne">Neon</element>
+</elements>

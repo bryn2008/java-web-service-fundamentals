@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Inheritance Solutions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Inheritance - Solutions</h1>
+
+			<p>These are suggested solutions for some of the exercises in this
+				chapter. There are
+				usually several ways to solve a problem and the solutions provided
+				illustrate
+				one approach. 
+			</p>
+<ol>
+
+<li><h2><a id="Exception"/>User Defined Exceptions</h2>
+<p>Single constructor Exception class</p>
+<pre>
+package solutions;
+
+public class ShapeException extends RuntimeException {
+    public ShapeException(String format, Object... args) {
+        super(String.format(format,args));
+    }
+}
+</pre>
+<p>Test case</p>
+<pre>
+package solutions;
+
+import org.junit.Test;
+
+public class TestShapeException {
+    @Test(expected = ShapeException.class)
+    public void testCanThrowSimpleException(){
+        throw new ShapeException("Testing shape exception");
+    }
+}
+</pre>
+<p>Full version of Exception class</p>
+<pre>
+package solutions;
+
+public class ShapeException extends RuntimeException {
+    public ShapeException(String format, Object... args) {
+        super(String.format(format,args));
+    }
+    public ShapeException(Exception ex, String format, Object... args) {
+        super(String.format(format,args), ex);
+    }
+}
+</pre>
+<p>Full test suite</p>
+<pre>
+package solutions;
+
+import org.junit.Test;
+
+public class TestShapeException {
+    @Test(expected = ShapeException.class)
+    public void testCanThrowSimpleException(){
+        throw new ShapeException("Testing shape exception");
+    }
+
+    @Test(expected = ShapeException.class)
+    public void testCatchAndThrowSimpleException(){
+        try{
+            double width = Double.parseDouble("20mm");
+        }
+        catch (Exception ex) {
+            throw new ShapeException(ex, "Testing catch underlying exception");
+        }
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Exception">Questions</a></p>
+</li>
+
+<li><h2><a id="Shape"/>Generalised Shape</h2>
+<p>Shape class</p>
+<pre>
+package solutions;
+
+import java.awt.*;
+
+public class Shape {
+    private Color color;
+
+    public Shape(Color color) {
+        this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Shape color=%s", color);
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public double getArea() {
+        return 0;
+    }
+}
+</pre>
+<p>Test case</p>
+<pre>
+package solutions;
+
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
+import java.awt.*;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+public class TestShapes {
+    static final double EPS = 1e-2;
+
+    @Test
+    public void testGenericBlueShape() {
+        Shape shape = new Shape(Color.BLUE);
+        assertThat(shape.getColor(), is(Color.BLUE));
+        assertThat(shape.getArea(), is(Matchers.closeTo(0, EPS)));
+    }
+}
+
+</pre>
+
+
+<p><a href="index.html#Shape">Questions</a></p>
+</li>
+
+<li><h2><a id="Rectangle"/>Rectangle</h2>
+<p>Rectangle class</p>
+<pre>
+package solutions;
+
+import java.awt.*;
+
+public class Rectangle extends Shape {
+    private double length;
+    private double width;
+
+    public Rectangle(double length, double width, Color color) {
+        super(color);
+        if (length&lt;=0 || width&lt;=0) {
+            throw new ShapeException("rectangle sides must be greater than zero");
+        }
+        this.length = length;
+        this.width = width;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Rectangle %s, l=%s w=%s", super.toString(), length, width);
+    }
+
+    @Override
+    public double getArea() {
+        return length*width;
+    }
+}
+
+</pre>
+<p>Test cases</p>
+<pre>
+@Test
+public void testRectangleRed3x2() {
+    Shape shape = new Rectangle(3, 2, Color.RED);
+    assertThat(shape.getColor(), is(Color.RED));
+    assertThat(shape.getArea(), is(Matchers.closeTo(6, EPS)));
+}
+
+@Test(expected=ShapeException.class)
+public void testInvalidRectangleRedMinus3x2() {
+    Shape shape = new Rectangle(-3, 2, Color.RED);
+}
+
+@Test(expected=ShapeException.class)
+public void testInvalidRectangleRedMinus3xMinus2() {
+    Shape shape = new Rectangle(-3, -2, Color.RED);
+}
+
+@Test(expected=ShapeException.class)
+public void testInvalidRectangleRed3xMinus2() {
+    Shape shape = new Rectangle(3, -2, Color.RED);
+}
+</pre>
+
+
+<p><a href="index.html#Rectangle">Questions</a></p>
+</li>
+
+<li><h2><a id="Triangle"/>Triangle</h2>
+<p>Triangle class</p>
+<pre>
+package solutions;
+
+import java.awt.*;
+import java.util.Arrays;
+
+public class Triangle extends Shape {
+    private double[] sides;
+
+    public Triangle(double[] sides, Color color) {
+        super(color);
+        this.sides = Arrays.copyOf(sides, sides.length);
+        Arrays.sort(this.sides);
+        if (sides.length != 3) {
+            throw new ShapeException("Triangles have 3 sides");
+        }
+        if (sides[0]&lt;=0 || sides[1]&lt;=0 || sides[2]&lt;=0) {
+            throw new ShapeException("Triangle sides must be greater than zero");
+        }
+        if (sides[0]+sides[1] &lt;= sides[2]) {
+            throw new ShapeException("Invalid triangle");
+        }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Triangle %s, sides=%s", super.toString(), Arrays.toString(sides));
+    }
+
+    @Override
+    public double getArea() {
+        double p = (sides[0]+sides[1]+sides[2])/2;
+        return Math.sqrt(p*(p-sides[0])*(p-sides[1])*(p-sides[2]));
+    }
+}
+</pre>
+<p>Test cases</p>
+<pre>
+@Test
+public void testTriangleGreen2x3x4() {
+    Shape shape = new Triangle(new double[]{2,3,4}, Color.GREEN);
+    assertThat(shape.getColor(), is(Color.GREEN));
+    assertThat(shape.getArea(), is(Matchers.closeTo(2.9, EPS)));
+}
+
+@Test(expected = ShapeException.class)
+public void testInvalidTriangleSide0(){
+    Triangle t = new Triangle(new double[]{-2,3,4}, Color.GREEN);
+}
+
+@Test(expected = ShapeException.class)
+public void testInvalidTriangleSide1(){
+    Triangle t = new Triangle(new double[]{2,-3,4}, Color.GREEN);
+}
+
+@Test(expected = ShapeException.class)
+public void testInvalidTriangleSide2(){
+    Triangle t = new Triangle(new double[]{2,3,-4}, Color.GREEN);
+}
+
+@Test(expected = ShapeException.class)
+public void testInvalidTriangle(){
+    Triangle t = new Triangle(new double[]{1,2,3}, Color.GREEN);
+}
+
+@Test(expected = ShapeException.class)
+public void testInvalid2ItemArrayConstructorTriangle(){
+    Triangle t = new Triangle(new double[]{1,2}, Color.GREEN);
+}
+
+@Test(expected = ShapeException.class)
+public void testInvalid4ItemArrayConstructorTriangle(){
+    Triangle t = new Triangle(new double[]{1,2,3,4}, Color.GREEN);
+}
+</pre>
+
+
+<p><a href="index.html#Triangle">Questions</a></p>
+</li>
+
+<li><h2><a id="Abstract"/>Refactor Shape to be Abstract</h2>
+<p>Abstract shape class</p>
+<pre>
+package solutions;
+
+import java.awt.*;
+
+public abstract class Shape {
+    private Color color;
+
+    public Shape(Color color) {
+        this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Shape color=%s", color);
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public abstract double getArea();
+}
+</pre>
+
+
+<p><a href="index.html#Abstract">Questions</a></p>
+</li>
+
+<li><h2><a id="Drawing"/>Drawing Package</h2>
+<p>Drawing class</p>
+<pre>
+package solutions;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Drawing {
+    List&lt;Shape&gt; shapes = new ArrayList&lt;&gt;();
+
+    @Override
+    public String toString() {
+        return String.format(&quot;Drawing %s&quot;, shapes);
+    }
+
+    void add (Shape shape) {
+        shapes.add(shape);
+    }
+
+    double getShapeArea() {
+        double area = 0;
+        for (Shape shape : shapes) {
+            area += shape.getArea();
+        }
+        return area;
+    }
+}
+</pre>
+<p>Test case</p>
+<pre>
+package solutions;
+
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
+import java.awt.*;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+public class TestDrawing {
+    static final double EPS = 1e-2;
+
+    @Test
+    public void testFiveShapesArea() {
+        Drawing drawing = new Drawing();
+        drawing.add(new Rectangle(2,3, Color.BLUE));
+        drawing.add(new Rectangle(4,5, Color.RED));
+        drawing.add(new Triangle(new double[]{2,3,4}, Color.GREEN));
+        drawing.add(new Triangle(new double[]{3,4,5}, Color.CYAN));
+        drawing.add(new Rectangle(1.1,5.5, Color.PINK));
+        assertThat(drawing.getShapeArea(), is(Matchers.closeTo(35.72, EPS)));
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Drawing">Questions</a></p>
+</li>
+
+<li><h2><a id="Enum"/>Add Enumerated Triangle Type</h2>
+<p>Triangle class (partial)</p>
+<pre>
+package solutions;
+
+import java.awt.*;
+import java.util.Arrays;
+
+public class Triangle extends Shape {
+    private double[] sides;
+
+//omitted code
+
+    public static enum Category {
+        PLAIN, ISOSCELES, EQUILATERAL, RIGHT_ANGLED
+    }
+
+    public Category getCategory() {
+        if (sides[0]==sides[1] &amp;&amp; sides[1]==sides[2]) {
+            return Category.EQUILATERAL;
+        }
+        if (sides[0]==sides[1] || sides[1]==sides[2] || sides[0]==sides[2]){
+            return Category.ISOSCELES;
+        }
+        if (Math.abs(sides[0]*sides[0] + sides[1]*sides[1] - sides[2]*sides[2]) &lt; 1.e-5) {
+            return Category.RIGHT_ANGLED;
+        }
+        return Category.PLAIN;
+    }
+}
+
+</pre>
+<p>Test case</p>
+<pre>
+package solutions;
+
+import org.junit.Test;
+
+import java.awt.*;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+public class TestTriangleCategory {
+    @Test
+    public void testPlainTriangle(){
+        Triangle t = new Triangle(new double[]{2,3,4}, Color.BLUE);
+        assertThat(t.getCategory(), is(Triangle.Category.PLAIN));
+    }
+
+    @Test
+    public void testEquilateralTriangle(){
+        Triangle t = new Triangle(new double[]{3,3,3}, Color.BLUE);
+        assertThat(t.getCategory(), is(Triangle.Category.EQUILATERAL));
+    }
+
+    @Test
+    public void testIsoscelesTriangle(){
+        Triangle t = new Triangle(new double[]{3,3,2}, Color.BLUE);
+        t = new Triangle(new double[]{2,2,Math.sqrt(8)}, Color.BLUE);
+        assertThat(t.getCategory(), is(Triangle.Category.ISOSCELES));
+    }
+
+    @Test
+    public void testRightAngledTriangle(){
+        Triangle t = new Triangle(new double[]{3,4,5}, Color.BLUE);
+        assertThat(t.getCategory(), is(Triangle.Category.RIGHT_ANGLED));
+    }
+}
+</pre>
+
+<p><a href="index.html#Enum">Questions</a></p>
+</li>
+</ol>
+
+
+		</div>
+
+		<div id="footer">
+			<hr />
+
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

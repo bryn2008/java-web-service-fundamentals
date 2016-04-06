@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Unit Testing - Questions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Unit Testing - Questions</h1>
+
+			<p>
+				These exercises are designed to expand on the topics introduced
+				in the
+				<strong>Unit Testing</strong>
+				chapter of the Java Development training course.
+			</p>
+
+			<p>You can attempt the exercises in any order but the later
+				exercises tend to be more complex and require more time to complete. You
+				are not expected to complete all the exercises in the time available.
+				Just do as many as you can do, or want to do, and
+				try to find time after the course has finished to return to complete
+				these exercises. If you are unsure what to do, or need advice
+				as you work through the exercises then please ask your
+				instructor for additional information.</p>
+			
+			<p>The purpose of these exercises is to practice developing code using a Test Drievn 
+Development approach where you develop the tests in parallel with the code, and
+start with each test case.
+</p>
+<ol>
+
+<li><h2><a id="Triangle"/>Testing the Triangle class</h2>
+<p>
+To start with you will need to add the JUnit and Hamcrest dependencies to your POM file:
+</p>
+<pre>
+&lt;dependency&gt;
+    &lt;groupId&gt;junit&lt;/groupId&gt;
+    &lt;artifactId&gt;junit&lt;/artifactId&gt;
+    &lt;version&gt;4.12&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.hamcrest&lt;/groupId&gt;
+    &lt;artifactId&gt;hamcrest-all&lt;/artifactId&gt;
+    &lt;version&gt;1.3&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
+<p>
+Create your Java test files in 
+a package in the <b>src/test/java</b> folder. Don't forget
+to include the following <b>import</b> in your test files:
+</p>
+<pre>
+import static org.junit.Assert.*;
+</pre>
+<p>
+<p>
+In a previous exercise you were asked to
+define a class to represent a triangle storing the lengths of the three sides
+of the triangle including methods to indicate if the triangle is:
+</p>
+<ul>
+<li>isosceles (two sides of the same length)</li>
+<li>equilateral (all sides the same length)</li>
+<li>right angled
+(sum of the squares of the two shorter sides equals the square of the longest
+side)</li>
+</ul>
+<p>
+<b>DO NOT</b> use your existing class but start again with a new class called
+<b>TriangleShape</b> and develop this class in combination with JUnit test cases.
+Do this in the following stages:
+</p>
+<ol>
+<li>Create a <b>TriangleShape</b> class with a single constructor that takes a
+<b>double[]</b> parameter - do not create any attributes or add code to this constructor.</li>
+<li>Add a <b>public List&lt;Double&gt; getSides()</b> method to this class that returns an
+empty <b>ArrayList&lt;Double&gt;</b>.</li>
+<li>Create a test class to create a triangle with sides of [2,3,4] and test that the
+number of sides returned by the <b>getSides()</b> method is 3 and that the list 
+contains values [2,3,4]. This test should fail. You will find the Hamcrest 
+<b>containsInAnyOrder</b>() method useful for this test. For example:
+<pre>
+List&lt;String&gt; collection = Lists.newArrayList("ab", "cd", "ef");
+assertThat(collection, containsInAnyOrder("cd", "ab", "ef"));
+</pre></li>
+<li>Update your class to make this test pass.</li>
+<li>Add a (failing) test to create a triangle with only two sides [2,3] and verify that
+an <i>expected</i> <b>IllegalArgumentException is thrown.</b></li>
+<li>Update your class to make this test pass.</li>
+<li>Add a test to create a triangle with four sides [2,3] and verify that
+an <i>expected</i> <b>IllegalArgumentException</b> is thrown. If this test doesn't pass
+update your class to make it pass.</li>
+<li>Add an outline <b>boolean isIsosceles()</b> method that always returns false.</li>
+<li>Create a test for an isosceles triangle [3,3,2] and update your class to make this pass.</li>
+<li>Test non isosceles triangles [2,3,4] and [3,3,3] (equilateral is not isosceles).</li>
+<li>Create a test for an equilateral  triangle [3,3,3] and update your class to make this pass.</li>
+<li>Test non equilateral triangles .</li>
+<li>Add a test for right angled triangles ([3,4,5]) and update your class to make this pass, test an
+isosceles triangle that is also right angled, and a non right angled triangle.</li>
+</ol>
+
+<p><a href="solutions.html#Triangle">Solutions</a></p>
+</li>
+</ol>
+
+		</div>
+
+		<div id="footer">
+			<hr />
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

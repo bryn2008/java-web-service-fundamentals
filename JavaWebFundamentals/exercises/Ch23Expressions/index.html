@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Expressions - Questions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Expressions - Questions</h1>
+
+			<p>
+				These exercises are designed to expand on the topics introduced
+				in the
+				<strong>Expressions</strong>
+				chapter of the Java Development training course.
+			</p>
+
+			<p>You can attempt the exercises in any order but the later
+				exercises tend to be more complex and require more time to complete. You
+				are not expected to complete all the exercises in the time available.
+				Just do as many as you can do, or want to do, and
+				try to find time after the course has finished to return to complete
+				these exercises. If you are unsure what to do, or need advice
+				as you work through the exercises then please ask your
+				instructor for additional information.</p>
+			
+			<p>The purpose of these exercises is to work with expression evaluation to understand
+operators, operands, precedence and data conversion; and to work with string methods and formatted strings.
+</p>
+<ol>
+
+<li><h2><a id="Tables"/>Times Tables</h2>
+<p>Use two nested <b>for</b> loops to print out the classic children's times table
+    so that it looks like:
+</p>
+<pre>
+     1   2   3   4   5   6   7   8   9  10  11  12
+ 1   1   2   3   4   5   6   7   8   9  10  11  12
+ 2   2   4   6   8  10  12  14  16  18  20  22  24
+ 3   3   6   9  12  15  18  21  24  27  30  33  36
+...
+12  12  24  36  48  60  72  84  96 108 120 132 144
+</pre>
+<p>
+Initially use the <b>Sysytem.out.format</b>() method to format each number separately in a
+field width of 4 characters. At the end of each row use <b>Sysytem.out.println()</b>
+to generate the end of line marker. You will need to use a separate for loop for the
+first (header) line.
+</p>
+<p>
+Once you have your program working refactor it so that each row of numbers is
+appended to a <b>StringBuilder</b> object and <b>Sysytem.out.println</b>() is
+used to print the row: you will need to use <b>String.format</b>() to create the
+string to append to the string builder. Use a <b>StringBuilder</b> to build up
+the header line as well.
+</p>
+
+<p><a href="solutions.html#Tables">Solutions</a></p>
+</li>
+
+<li><h2><a id="Ordnance"/>Projectile Paths</h2>
+<p>The path of projectiles such as a cannon ball (or an angry bird) when
+ignoring air resistance is given by several equations:
+</p>
+<img src='ordnance.png' width='600' height='155'/>
+<p>
+Write a program to calculate the launch angle theta when the 
+range is 100m and the initial velocity 35 m/s. Remember to convert theta from
+radians to degrees when you print out the value (which should be 26.6 degrees).
+Now, feed your angle of theta (in radians) back into the range equation to verify the distance as 100m.
+</p>
+<p>
+You will find the functions you need in the <b>Math</b> package, in particular
+you will need to use <b>asin</b>() (for arcsin), <b>sin</b>(), <b>cos</b>(),
+<b>pow</b>() (for power or exponent), <b>toDegrees</b>() and <b>toRadians</b>().
+<p>
+
+<p><a href="solutions.html#Ordnance">Solutions</a></p>
+</li>
+
+<li><h2><a id="Guess"/>Guessing Game</h2>
+<p>
+Generate a random integer between 1 and 9 (inclusive). Prompt the user to
+guess the number. If the user guesses correctly print out <i>Good Guess</i>
+otherwise print out whether their guess was lower or higher then the
+generated number. Finally print out the generated number.
+</p>
+<p>
+Refactor (refine) your program to allow the user to guess again by looping
+round until the user guesses correctly or enters 0 to stop the program.
+</p>
+
+<p><a href="solutions.html#Guess">Solutions</a></p>
+</li>
+
+<li><h2><a id="Check"/>Prime Number Check</h2>
+<p>Write a program that reads a single integer from the user and
+then prints out if that number is prime.</p>
+<p>A prime number is a number greater than one that cannot be exactly divided by any
+    number other than itself and one. You can speed up your test by only
+    considering the odd numbers up to 50% of the number you are testing.
+Do this in your solution by using a <b>for</b> loop to step through odd numbers from 3 up
+to half of the user's input number.
+<p>
+Refactor you solution to loop round reading integers from the user 
+while they enter values greater than one.
+
+<p><a href="solutions.html#Check">Solutions</a></p>
+</li>
+
+<li><h2><a id="Haversine"/>Haversine Distances</h2>
+<p>The <a href='http://en.wikipedia.org/wiki/Haversine_formula'  target="_new">Haversine Formula</a>
+is used to calculate the great circle distance between two points on a sphere. The
+formula is evaluated as follows where <b>lat1, lon1</b> and 
+<b>lat2, lon2</b> represent the latitude and
+longitude of two points (defined as radians) and <b>D</b> is the diameter of the Earth:
+</p>
+<img src='haversine.png' width='578' height='115'/>
+<p>
+Write a program that calculates the distance from Exeter (50.73, -3.54) 
+to Heathrow (51.4775, -0.4614) expressed
+in km (Earth diameter is 12742km). You should get the result 222.06km. You will
+find all the functions you need in the <b>Math</b> package, and you will
+need to convert the latitude and longitude degrees to radians for use in the trigonometric
+functions. 
+</p>
+
+<p><a href="solutions.html#Haversine">Solutions</a></p>
+</li>
+</ol>
+
+		</div>
+
+		<div id="footer">
+			<hr />
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

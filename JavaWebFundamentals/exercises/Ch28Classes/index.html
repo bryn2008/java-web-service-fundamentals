@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Classes &amp; Objects - Questions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Classes &amp; Objects - Questions</h1>
+
+			<p>
+				These exercises are designed to expand on the topics introduced
+				in the
+				<strong>Classes &amp; Objects</strong>
+				chapter of the Java Development training course.
+			</p>
+
+			<p>You can attempt the exercises in any order but the later
+				exercises tend to be more complex and require more time to complete. You
+				are not expected to complete all the exercises in the time available.
+				Just do as many as you can do, or want to do, and
+				try to find time after the course has finished to return to complete
+				these exercises. If you are unsure what to do, or need advice
+				as you work through the exercises then please ask your
+				instructor for additional information.</p>
+			
+			<p>The purpose of these exercises is to define classes, create objects and
+work with attributes, properties and instance methods.
+</p>
+<p>Use Logback for writing messages to the console, directly writing to <b>System.out</b> no longer allowed.</p>
+<ol>
+
+<li><h2><a id="Triangle"/>Triangles</h2>
+<p>
+Define a class to represent a triangle storing the lengths of the three sides
+of the triangle. Add methods to indicate if the triangle is:
+</p>
+<ul>
+<li>isosceles (two sides of the same length)</li>
+<li>equilateral (all sides the same length)</li>
+<li>right angled
+(sum of the squares of the two shorter sides equals the square of the longest
+side)</li>
+</ul>
+<p>You should be able to specify the side lengths in any order when creating the 
+triangle (no need to supply them in ascending or descending order). Store the sides
+in an array of three doubles and sort these so that the longest side is the last
+entry in the array (this will make checking for right angled triangles easier).
+</p>
+<p>Throw an <b>IllegalArgumentException</b> to reject an attempt to create 
+an invalid triangle where the sum of the lengths
+of the shorter sides is less than or equal to the length of the longest side, or
+any of the sides are zero or negative.
+</p>
+<p>Provide two constructors, one takes an array of three side lengths as doubles
+(check there are exactly 3 sides) and one with 3 separate double values for the sides. Use
+constructor chaining (a <b>this()</b> method call) to implement one of these
+constructors.
+</p>
+<p>
+Test your program with suitable values such as:
+</p>
+<ul>
+<li>2, 3, 4 - plain triangle</li>
+<li>3, 3, 2 - isosceles</li>
+<li>3, 3, 3 - equilateral</li>
+<li>5, 4, 3 - right angled</li>
+<li>1, 2, 3 - invalid</li>
+</ul>
+
+<p><a href="solutions.html#Triangle">Solutions</a></p>
+</li>
+
+<li><h2><a id="Lottery"/>Lottery</h2>
+<p>Create a class representing a lottery ticket to store a set
+    of 6 unique numbers (create a <b>TreeSet&lt;Integer&gt;</b> to hold the numbers). 
+    In the initialisation method generate 6 randomly chosen
+    numbers between 1 and 59 using <b>Random.nextInt</b>().</p>
+<p>
+Add a method to the class to match this ticket against another ticket and 
+return a <b>List</b> of the matched numbers - you will find the <b>retainAll</b>() method
+useful for matching the numbers in both tickets. Add a <b>toString</b>() that
+shows the numbers in the ticket - you don't need any getter or setter methods
+for this class.</p>
+<p>In a test class create a list of 10 lottery tickets 
+and generate a <i>draw</i> ticket. Print out the
+draw ticket numbers, and each tickets numbers indicating how many
+numbers matched - add the string 'WINNER' to any with 3 or more matched
+numbers.
+</p>
+<p>
+Add a second constructor that accepts a list of integers as a parameter
+and save these numbers in the ticket. Validate the the saved set of numbers
+is of the correct size (6) and all numbers are within the permitted
+range (1..59).
+</p>
+
+<p><a href="solutions.html#Lottery">Solutions</a></p>
+</li>
+
+<li><h2><a id="Planets"/>Planetary Data</h2>
+<p>Starting with the following table of planetary data:
+</p>
+<table><thead><tr><td>Planet</td><td>AU from Sun</td><td>Diameter</td></tr></thead>
+<tbody>
+<tr><td>"Mercury",</td><td>0.39,</td><td>4879</td></tr>
+<tr><td>"Neptune",</td><td>30.06,</td><td>49528</td></tr>
+<tr><td>"Jupiter",</td><td>5.2,</td><td>142984</td></tr>
+<tr><td>"Uranus",</td><td>19.18,</td><td>51118</td></tr>
+<tr><td>"Mars",</td><td>1.52,</td><td>6792</td></tr>
+<tr><td>"Earth",</td><td>1,</td><td>12756</td></tr>
+<tr><td>"Venus",</td><td>0.72,</td><td>12104</td></tr>
+<tr><td>"Saturn",</td><td>9.54,</td><td>120536</td></tr>
+</tbody>
+</table>
+<p>
+Define a class to store planetary data of name, distance from the sun (double)
+and diameter (int). Provide a constructor to create a planet and getter methods
+for each attribute (name, distance and diameter). You can  copy and paste 
+from the table to quickly create the parameter list
+needed to invoke a planet constructor.
+</p>
+<p>
+Create a second <b>SolarSystem</b> class that holds a list of individual
+planets and have its constructor initialise the list of planets. Have this
+class define a <b>list</b>() method that returns a <i>copy</i> of the list of planets.
+</p>
+<p>In a main test method create the solar system
+and then print out the planet list so that the names and
+planetary data are shown in columns as follows:
+</p>
+<pre>
+Mercury      0.39     4879
+Neptune     30.06    49528
+Jupiter      5.20   142984
+Uranus      19.18    51118
+Mars         1.52     6792
+Earth        1.00    12756
+Venus        0.72    12104
+Saturn       9.54   120536
+</pre>
+
+<p><a href="solutions.html#Planets">Solutions</a></p>
+</li>
+</ol>
+
+		</div>
+
+		<div id="footer">
+			<hr />
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

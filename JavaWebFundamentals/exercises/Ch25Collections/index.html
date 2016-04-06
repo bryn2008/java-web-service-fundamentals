@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Collections - Questions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Collections - Questions</h1>
+
+			<p>
+				These exercises are designed to expand on the topics introduced
+				in the
+				<strong>Collections</strong>
+				chapter of the Java Development training course.
+			</p>
+
+			<p>You can attempt the exercises in any order but the later
+				exercises tend to be more complex and require more time to complete. You
+				are not expected to complete all the exercises in the time available.
+				Just do as many as you can do, or want to do, and
+				try to find time after the course has finished to return to complete
+				these exercises. If you are unsure what to do, or need advice
+				as you work through the exercises then please ask your
+				instructor for additional information.</p>
+			
+			<p>The purpose of these exercises is to ...
+</p>
+<ol>
+
+<li><h2><a id="Lottery"/>UK Lottery</h2>
+<p>
+A UK lottery ticket entry requires 6 unique numbers between 1 and 59.
+Write a program to generate one row of random ticket numbers. Do this by:
+</p>
+<ol>
+<li>create an empty list for the numbers</li>
+<li>loop round until the list has 6 numbers</li>
+<li>use <b>random.randnext()</b> to generate a number between 1 and 59</li>
+<li>add this number to the list if the list does not already contain the number</li>
+<li>print out the list</li>
+<li>(optional) look at the <b>Collections</b> class to work out how to sort the numbers 
+into numerical order before printing the list.</li>
+</ol>
+
+
+<p><a href="solutions.html#Lottery">Solutions</a></p>
+</li>
+
+<li><h2><a id="Tables"/>Times Tables</h2>
+<p>
+    Create an array initialised with the numbers 1 to 12 and use this
+    as the source data to generate the classic multiplication tables.
+    Use and iterative <b>for</b> loop and the <b>format</b>() function
+    to print out the table so it looks like:
+</p>
+<pre>
+     1   2   3   4   5   6   7   8   9  10  11  12
+ 1   1   2   3   4   5   6   7   8   9  10  11  12
+ 2   2   4   6   8  10  12  14  16  18  20  22  24
+ 3   3   6   9  12  15  18  21  24  27  30  33  36
+...
+12  12  24  36  48  60  72  84  96 108 120 132 144
+</pre>
+
+<p><a href="solutions.html#Tables">Solutions</a></p>
+</li>
+
+<li><h2><a id="Haversine"/>Haversine Distances</h2>
+<p>The <a href='http://en.wikipedia.org/wiki/Haversine_formula'  target="_new">Haversine Formula</a>
+is used to calculate the great circle distance between two points on a sphere. The
+formula is evaluated as follows where <b>lat1, lon1</b> and 
+<b>lat2, lon2</b> represent the latitude and
+longitude of two points (defined as radians) and <b>D</b> is the diameter of the Earth:
+</p>
+<img src='haversine.png' width='578' height='115'/>
+<p>
+Write a function that calculates the distance between two locations each defined as an
+array of two doubles (<b>double[]</b>). Have the function return the distance in
+kilometres (Earth diameter is 12742km); you should use a class level
+<b>private static final</b> constant for the earth diameter.
+</p>
+<p>
+Call your function to calculate the distance from Exeter (50.73, -3.54) 
+to Heathrow (51.4775, -0.4614) expressed
+in km; you should get the result 222.06km. Pass in the values for the
+locations as anonymous arrays (use the syntax <b>new double[]{ }</b>).
+</p>
+
+<p><a href="solutions.html#Haversine">Solutions</a></p>
+</li>
+
+<li><h2><a id="RPC"/>Rock Paper Scissors</h2>
+<img class='right' src='r-p-c.png' width='350' height='259' alt='rock paper scissors image'>
+<div >
+<p>
+Rock-paper-scissors is a zero sum hand game played between two people. To play, each player simultaneously 
+forms one of three shapes with their hand:
+</p>
+<ul>
+<li>rock - fingers curled in a fist</li>
+<li>paper - fingers outstretched in a flat hand</li>
+<li>scissors - first and middle fingers outstretched to form a V, other fingers curled</li>
+</ul>
+<p>The shapes are compared so that the winner is detrmined from:</p>
+<ul>
+<li>rock blunts scissors</li>
+<li>paper wraps rock</li>
+<li>scissors cut paper</li>
+</ul>
+<p>In the event of a draw, the players select again and continue until a winner emerges or a player quits.
+</p>
+<p>
+Implement your version of the game. Prompt the player for a move (accept either the first letter
+or full name of the move), generate a random computer move, compare the results and display the
+winner. If there is a draw then loop round and repeat until the user quits or a winner is found.
+</p>
+<p>
+Use a decision matrix to compare the outcome of each game. That is create a 3x3 array and in each
+cell indicate the winner where the row is selected by the users choice and the column
+is selected by the computers choice. You will need to map rock, paper and scissors into
+the numbers 0, 1 and 2 (to index the collection). 
+</p>
+</div>
+
+<p><a href="solutions.html#RPC">Solutions</a></p>
+</li>
+
+<li><h2><a id="Dealer"/>Poker School</h2>
+<p>
+    Simulate the basic mechanism of a card playing game with a deck of decks and
+    players who are each dealt a hard of cards from the deck. A card can be simulated
+    using a number between 0 and 51. A card's face value will be the card number modulo (remainder) 
+    13 and the suit will be the card number divided by 13 (rank the suits clubs 0, diamonds 1,
+    hearts 2 and spades 3). The card deck and the player's hands will be simulated
+    using <b>ArrayList&lt;Integer&gt;</b> objects.
+</p>
+<p>
+There are a number of steps you will need to follow to develop this program:
+</p>
+<ol>
+<li>Create an array list to hold the deck of cards and fill this list with integer
+values from 0 to 51 (you'll need to use a counted <b>for</b> loop to do this)
+</li>
+<li>Create a class level (<b>private static</b>) method to shuffle the deck of cards. This
+method should have a <b>List&lt;Integer&gt;</b> parameter which is the deck to shuffle 
+and return <b>void</b> as the list will be modified directly. The shuffle algorithm should
+loop through every card in the deck and swap it with any other card in the deck: use a
+random index value between 0 and 51 to select which card to swap with the current card - it
+is possible and valid for a card to be swapped with itself and therefore not change position
+within the deck. Call this function to shuffle the deck.
+</li>
+<li>Create a list of players each of which is represented by an empty <b>ArrayList&lt;Integer&gt;</b>.
+This list (the poker table) will be declared as <b>List&lt;List&lt;Integer&gt;&gt;</b>: use
+the <b>Arrays.asList</b>() method to initialise this list.
+</li>
+<li> Create a class level (<b>private static</b>) method to deal the deck of cards to
+the players. You will need to pass in the deck of cards (a list), the list of players
+(a list of lists), and the number of cards to deal to each player. This method
+will return <b>void</b> as the deck and players hands passed as parameters 
+will be modified directly. Use a <i>proper</i>
+dealing algorithm that uses a counted loop to deal <i>n</i> cards one at a time to each player: 
+use an inner iterative loop to <i>deal</i> a card to each player by using the 
+<b>List.remove(0)</b> method to take the next card from the front of the deck and
+add it to the players hand. Call your deal method to deal 5 cards to each player.
+</li>
+<li> Define another class level method to print out a list of cards. This method
+should take a string <i>name</i> parameter and a card list (either a deckor a player's hand)
+and print out the card number as a value and suit. You will find these lookup strings useful
+for converting the value (number%13) and suit (number/13) to characters:
+<pre>
+private static final String SUITS = "CDHS";
+private static final String VALUES = "A23456789TJQK";
+</pre>
+</li>
+<li>
+Use your printer function to print out the player's hands and the cards left in the deck. 
+format your output in a similar manner to the following:
+<pre>
+Doyle     : 4D AD AD 3S 3H
+Bill      : AC 3S 2D 2D 2C
+Henry     : AH 3S 3D 2H 3H
+Deck      : 2S 3C 4S AD 4D 2C 2S 4C ...
+</pre>
+</li>
+<li>
+Strictly optional and no solution is provided but extend you program to compare the
+players hands and declare a winner using standard 
+<a href="https://en.wikipedia.org/wiki/List_of_poker_hands" target="_new">draw poker hand ranking</a>.
+</li>
+</ol>
+
+<p><a href="solutions.html#Dealer">Solutions</a></p>
+</li>
+</ol>
+
+		</div>
+
+		<div id="footer">
+			<hr />
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

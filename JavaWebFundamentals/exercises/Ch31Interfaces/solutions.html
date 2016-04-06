@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Interfaces Solutions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Interfaces - Solutions</h1>
+
+			<p>These are suggested solutions for some of the exercises in this
+				chapter. There are
+				usually several ways to solve a problem and the solutions provided
+				illustrate
+				one approach. 
+			</p>
+<ol>
+
+<li><h2><a id="Sorting"/>Sorting Planetary Data</h2>
+<p><b>Planet.java</b> class (unchanged)</p>
+<pre>
+package solutions;
+
+public class Planet {
+    private String name;
+    private double distance;
+    private int diameter;
+
+    public Planet(String name, double distance, int diameter) {
+        this.name = name;
+        this.distance = distance;
+        this.diameter = diameter;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s: distance=%.2f, diameter=%%.2f", name, distance , diameter/1000);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public int getDiameter() {
+        return diameter;
+    }
+}
+</pre>
+<p><b>SolarSystem.java</b> class</p>
+<pre>
+package solutions;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+public class SolarSystem {
+    List&lt;Planet&gt; planets = new ArrayList&lt;&gt;();
+
+    public SolarSystem() {
+        planets.add(new Planet(&quot;Mercury&quot;, 0.39, 4879));
+        planets.add(new Planet(&quot;Neptune&quot;, 30.06, 49528));
+        planets.add(new Planet(&quot;Jupiter&quot;, 5.2, 142984));
+        planets.add(new Planet(&quot;Uranus&quot;, 19.18, 51118));
+        planets.add(new Planet(&quot;Mars&quot;, 1.52, 6792));
+        planets.add(new Planet(&quot;Earth&quot;, 1, 12756));
+        planets.add(new Planet(&quot;Venus&quot;, 0.72, 12104));
+        planets.add(new Planet(&quot;Saturn&quot;, 9.54, 120536));
+    }
+
+    @Override
+    public String toString() {
+        return planets.toString();
+    }
+
+    private static class ByDistance implements Comparator&lt;Planet&gt; {
+        @Override
+        public int compare(Planet lhs, Planet rhs) {
+            return (int)(lhs.getDistance() - rhs.getDistance());
+        }
+    }
+
+    public List&lt;Planet&gt; list() {
+        return new ArrayList&lt;Planet&gt;(planets);
+    }
+
+    public List&lt;Planet&gt; listByDistance() {
+        List results = new ArrayList&lt;Planet&gt;(planets);
+        results.sort(new ByDistance());
+        return results;
+    }
+
+    public List&lt;Planet&gt; listByDiameter() {
+        List results = new ArrayList&lt;Planet&gt;(planets);
+        results.sort(new Comparator&lt;Planet&gt;() {
+            @Override
+            public int compare(Planet lhs, Planet rhs) {
+                return (int)(lhs.getDiameter() - rhs.getDiameter());
+            }
+        });
+        return results;
+    }
+
+}
+</pre>
+<p>Test case</p>
+<pre>
+package solutions;
+
+import org.junit.Test;
+
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+public class TestPlanets {
+
+    @Test
+    public void testSortPlanetsByDistance() {
+        SolarSystem system = new SolarSystem();
+        List&lt;Planet&gt; planets = system.listByDistance();
+        assertThat(planets.get(0).getName(), is(&quot;Mercury&quot;));
+        assertThat(planets.get(planets.size()-1).getName(), is(&quot;Neptune&quot;));
+    }
+
+    @Test
+    public void testSortPlanetsByYear() {
+        SolarSystem system = new SolarSystem();
+        List&lt;Planet&gt; planets = system.listByDiameter();
+        assertThat(planets.get(0).getName(), is(&quot;Mercury&quot;));
+        assertThat(planets.get(planets.size()-1).getName(), is(&quot;Jupiter&quot;));
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Sorting">Questions</a></p>
+</li>
+
+<li><h2><a id="Shapes"/>Shape Refactoring</h2>
+<p><b>Shape.java</b> interface</p>
+<pre>
+package solutions;
+
+import java.awt.*;
+
+public interface Shape {
+    Color getColor();
+    double getArea();
+}
+</pre>
+<p><b>ShapeBase.java</b> class</p>
+<pre>
+package solutions;
+
+import java.awt.*;
+
+public abstract class ShapeBase implements Shape {
+    private Color color;
+
+    public ShapeBase(Color color) {
+        this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Shape color=%s", color);
+    }
+
+    @Override
+    public Color getColor() {
+        return color;
+    }
+}
+</pre>
+<p><b>Rectangle.java</b> class</p>
+<pre>
+package solutions.interfaces;
+
+import java.awt.*;
+
+public class Rectangle extends ShapeBase {
+    private double length;
+    private double width;
+
+    public Rectangle(double length, double width, Color color) {
+        super(color);
+        if (length&lt;=0 || width&lt;=0) {
+            throw new ShapeException("rectangle sides must be greater than zero");
+        }
+        this.length = length;
+        this.width = width;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Rectangle %s, l=%s w=%s", super.toString(), length, width);
+    }
+
+    @Override
+    public double getArea() {
+        return length*width;
+    }
+}
+</pre>
+<p>Test case (unchanged)</p>
+<pre>
+package solutions;
+
+import org.hamcrest.Matchers;
+import org.junit.Test;
+import solutions.ShapeException;
+
+import java.awt.*;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+public class TestShapes {
+    static final double EPS = 1e-2;
+
+    @Test
+    public void testRectangleRed3x2() {
+        solutions.Shape shape = new solutions.Rectangle(3, 2, Color.RED);
+        assertThat(shape.getColor(), is(Color.RED));
+        assertThat(shape.getArea(), is(Matchers.closeTo(6, EPS)));
+    }
+
+    @Test(expected=ShapeException.class)
+    public void testInvalidRectangleRedMinus3x2() {
+        solutions.Shape shape = new solutions.Rectangle(-3, 2, Color.RED);
+    }
+
+    @Test(expected=ShapeException.class)
+    public void testInvalidRectangleRedMinus3xMinus2() {
+        solutions.Shape shape = new solutions.Rectangle(-3, -2, Color.RED);
+    }
+
+    @Test(expected=ShapeException.class)
+    public void testInvalidRectangleRed3xMinus2() {
+        solutions.Shape shape = new solutions.Rectangle(3, -2, Color.RED);
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Shapes">Questions</a></p>
+</li>
+
+<li><h2><a id="Stratgey"/>Search Strategy</h2>
+<p><b>Selector.java</b> interface</p>
+<pre>
+package solutions;
+
+public interface Selector {
+    boolean select(Shape shape);
+}
+</pre>
+<p><b>Drawing.java</b> class</p>
+<pre>
+package solutions;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Drawing {
+    List&lt;Shape&gt; shapes = new ArrayList&lt;&gt;();
+
+    @Override
+    public String toString() {
+        return String.format(&quot;Drawing %s&quot;, shapes);
+    }
+
+    void add (Shape shape) {
+        shapes.add(shape);
+    }
+
+    double getShapeArea() {
+        double area = 0;
+        for (Shape shape : shapes) {
+            area += shape.getArea();
+        }
+        return area;
+    }
+
+    public List&lt;Shape&gt; search(Selector selector) {
+        List&lt;Shape&gt; result = new ArrayList&lt;&gt;();
+        for (Shape shape : shapes) {
+            if (selector.select(shape)) {
+                result.add(shape);
+            }
+        }
+        return result;
+    }
+}
+</pre>
+<p><b>LargeBlue.java</b> selector class</p>
+<pre>
+package solutions;
+
+class LargeBlue implements Selector {
+    @Override
+    public boolean select(Shape shape) {
+        return shape.getColor()==Color.BLUE &amp;&amp; shape.getArea() &gt;= 5.0;
+    }
+}
+</pre>
+<p>Test case</p>
+<pre>
+package solutions.interfaces;
+
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
+import java.awt.*;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+public class TestSelector {
+    static final double EPS = 1e-2;
+
+    @Test
+    public void testFiveShapesArea() {
+        Drawing drawing = new Drawing();
+        drawing.add(new Rectangle(2,3, Color.BLUE));
+        drawing.add(new Rectangle(4,5, Color.RED));
+        drawing.add(new Triangle(new double[]{2,3,4}, Color.GREEN));
+        drawing.add(new Triangle(new double[]{3,4,5}, Color.BLUE));
+        drawing.add(new Rectangle(1.1,5.5, Color.PINK));
+        List&lt;Shape&gt; largeBlue = drawing.search(new LargeBlue());
+        assertThat(largeBlue.size(), is(2));
+        double area = largeBlue.get(0).getArea()+largeBlue.get(1).getArea();
+        assertThat(area, is(Matchers.closeTo(12., EPS)));
+    }
+}
+</pre>
+
+<p><a href="index.html#Stratgey">Questions</a></p>
+</li>
+</ol>
+
+
+		</div>
+
+		<div id="footer">
+			<hr />
+
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

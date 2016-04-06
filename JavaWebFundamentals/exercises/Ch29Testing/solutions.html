@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Unit Testing Solutions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Unit Testing - Solutions</h1>
+
+			<p>These are suggested solutions for some of the exercises in this
+				chapter. There are
+				usually several ways to solve a problem and the solutions provided
+				illustrate
+				one approach. 
+			</p>
+<ol>
+
+<li><h2><a id="Triangle"/>Testing the Triangle class</h2>
+<p>Test class (first!):</p>
+<pre>
+package solutions;
+
+import org.junit.Test;
+
+import java.util.List;
+
+import static junit.framework.TestCase.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+public class TestTriangleShape {
+    @Test
+    public void testSimpleTriangleFromArrayOfSides(){
+        TriangleShape t = new TriangleShape(new double[]{2,3,4});
+        List&lt;Double&gt; sides = t.getSides();
+        assertEquals(sides.size(), 3);
+        assertThat(sides, containsInAnyOrder(2.0,3.0,4.0));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testInvalidTriangleSide0(){
+        Triangle t = new Triangle(new double[]{-2,3,4});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testInvalidTriangleSide1(){
+        Triangle t = new Triangle(new double[]{2,-3,4});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testInvalidTriangleSide2(){
+        Triangle t = new Triangle(new double[]{2,3,-4});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testInvalidTriangle(){
+        TriangleShape t = new TriangleShape(new double[]{1,2,3});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testInvalid2ItemArrayConstructorTriangle(){
+        TriangleShape t = new TriangleShape(new double[]{1,2});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testInvalid4ItemArrayConstructorTriangle(){
+        TriangleShape t = new TriangleShape(new double[]{1,2,3,4});
+    }
+
+    @Test
+    public void testEquilateralTriangles(){
+        TriangleShape t = new TriangleShape(new double[]{3,3,3});
+        assertTrue(t.isEquilateral());
+        t = new TriangleShape(new double[]{2,3,4});
+        assertFalse(t.isEquilateral());
+    }
+
+    @Test
+    public void testIsoscelesTriangles(){
+        TriangleShape t = new TriangleShape(new double[]{3,3,2});
+        assertTrue(t.isIsosceles());
+        t = new TriangleShape(new double[]{2,3,4});
+        assertFalse(t.isIsosceles());
+        t = new TriangleShape(new double[]{3,3,3});
+        assertFalse(t.isIsosceles());
+    }
+
+    @Test
+    public void testRightAngledTriangles(){
+        TriangleShape t = new TriangleShape(new double[]{2,3,4});
+        assertFalse(t.isRightAngled());
+        t = new TriangleShape(new double[]{3,4,5});
+        assertTrue(t.isRightAngled());
+        t = new TriangleShape(new double[]{2,2,Math.sqrt(8)});
+        assertTrue(t.isRightAngled());
+    }
+}
+</pre>
+<p>Class under test:</p>
+<pre>
+package solutions;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class TriangleShape {
+    private double[] sides = new double[3];
+
+    public TriangleShape(double[] sides) {
+        this.sides = Arrays.copyOf(sides, sides.length);
+        Arrays.sort(this.sides);
+        if (sides.length != 3) {
+            throw new IllegalArgumentException(&quot;Triangles have 3 sides&quot;);
+        }
+        if (sides[0]&lt;=0 || sides[1]&lt;=0 || sides[2]&lt;=0) {
+            throw new IllegalArgumentException(&quot;Triangle sides must be greater than zero&quot;);
+        }
+        if (sides[0]+sides[1] &lt;= sides[2]) {
+            throw new IllegalArgumentException(&quot;Invalid triangle&quot;);
+        }
+    }
+
+    public TriangleShape(double s1, double s2, double s3){
+        this(new double[] {s1, s2, s3});
+    }
+
+    @Override
+    public String toString() {
+        return String.format(&quot;(%.2f, %.2f, %.2f)&quot;, sides[0], sides[1], sides[2]);
+    }
+    public boolean isIsosceles() {
+        return !isEquilateral() &amp;&amp; (sides[0]==sides[1] || sides[1]==sides[2] || sides[0]==sides[2]);
+    }
+    public boolean isEquilateral() {
+        return sides[0]==sides[1] &amp;&amp; sides[1]==sides[2];
+    }
+
+    public boolean isRightAngled() {
+        return Math.abs(sides[0]*sides[0] + sides[1]*sides[1] - sides[2]*sides[2]) &lt; 1.e-5;
+    }
+
+    public List&lt;Double&gt; getSides() {
+        return Arrays.asList(sides[0], sides[1], sides[2]);
+    }
+}
+</pre>
+
+<p><a href="index.html#Triangle">Questions</a></p>
+</li>
+</ol>
+
+
+		</div>
+
+		<div id="footer">
+			<hr />
+
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

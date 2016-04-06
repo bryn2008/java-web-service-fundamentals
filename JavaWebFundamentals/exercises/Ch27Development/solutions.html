@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Developing Applications Solutions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Developing Applications - Solutions</h1>
+
+			<p>These are suggested solutions for some of the exercises in this
+				chapter. There are
+				usually several ways to solve a problem and the solutions provided
+				illustrate
+				one approach. 
+			</p>
+<ol>
+
+<li><h2><a id="Development"/>Setting Up Maven and Logging</h2>
+<p>Updated Java source:</p>
+<pre>
+package solutions;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class MainDevelopment {
+
+    private static final Logger logger = LoggerFactory.getLogger(MainDevelopment.class);
+
+    public static void main(String[] args) {
+        logger.info("From MainDevelopment main method");
+        Utilities.showWarning("For Utilities showWarning");
+        Utilities.showDebug("For Utilities showDebug");
+    }
+}
+
+class Utilities {
+    private static final Logger logger = LoggerFactory.getLogger(Utilities.class);
+
+    static void showWarning(String message) {
+        logger.warn("From showInformation: "+message);
+    }
+
+    static void showDebug(String message) {
+        logger.debug("From showDebug: "+message);
+        showWarning(message);
+    }
+}
+</pre>
+<p>Logback configuration file <b>logback.xml</b>:</p>
+<pre>
+&lt;configuration&gt;
+    &lt;timestamp key=&quot;today&quot; datePattern=&quot;yyyyMMdd&quot;/&gt;
+
+    &lt;appender name=&quot;FILE&quot; class=&quot;ch.qos.logback.core.FileAppender&quot;&gt;
+        &lt;file&gt;log-${today}.txt&lt;/file&gt;
+        &lt;append&gt;true&lt;/append&gt;
+        &lt;filter class=&quot;ch.qos.logback.classic.filter.ThresholdFilter&quot;&gt;
+            &lt;level&gt;warn&lt;/level&gt;
+        &lt;/filter&gt;
+        &lt;encoder&gt;
+            &lt;pattern&gt;%date %level [%file : %line] %msg%n&lt;/pattern&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+
+    &lt;appender name=&quot;STDOUT&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;
+        &lt;encoder&gt;
+            &lt;pattern&gt;%level date %msg%n&lt;/pattern&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+
+    &lt;logger name=&quot;solutions.MainDevelopment&quot; additivity=&quot;true&quot; level=&quot;debug&quot;&gt;
+        &lt;appender-ref ref=&quot;FILE&quot; /&gt;
+    &lt;/logger&gt;
+
+    &lt;logger name=&quot;solutions.Utilities&quot; additivity=&quot;true&quot; level=&quot;info&quot;&gt;
+        &lt;appender-ref ref=&quot;FILE&quot; /&gt;
+    &lt;/logger&gt;
+
+    &lt;root level=&quot;debug&quot;&gt;
+        &lt;appender-ref ref=&quot;STDOUT&quot; /&gt;
+    &lt;/root&gt;
+&lt;/configuration&gt;
+</pre>
+
+
+<p><a href="index.html#Development">Questions</a></p>
+</li>
+</ol>
+
+
+		</div>
+
+		<div id="footer">
+			<hr />
+
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

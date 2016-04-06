@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Spring Boot - Questions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Spring Boot - Questions</h1>
+
+			<p>
+				These exercises are designed to expand on the topics introduced
+				in the
+				<strong>Spring Boot</strong>
+				chapter of the Java Development training course.
+			</p>
+
+			<p>You can attempt the exercises in any order but the later
+				exercises tend to be more complex and require more time to complete. You
+				are not expected to complete all the exercises in the time available.
+				Just do as many as you can do, or want to do, and
+				try to find time after the course has finished to return to complete
+				these exercises. If you are unsure what to do, or need advice
+				as you work through the exercises then please ask your
+				instructor for additional information.</p>
+			
+			<p>The purpose of these exercises is to build a Spring Boot application and explore the
+using of dependency Injection and profiles to control the configuration of
+an application.
+</p>
+<p>
+These tests progress in sequence creating an initial Spring Boot application 
+and adding functionality to this application. You should attempt these questions in the
+order specified. The last question (on Name Lists) is more involved but
+does not rely on the the preceding questions and could
+be attempted on its own. You are not expected to complete all of these questions in the
+time available.
+</p>
+<ol>
+
+<li><h2><a id="Boot"/>Configuring Spring Boot</h2>
+<p>
+Create a new Java project that uses Spring Boot to manage an application. 
+You will need to add a Maven POM with a plugin for Spring Boot
+and a parent element to define the Spring Boot default configuration:
+</p>
+<pre>
+&lt;parent&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+    &lt;version&gt;1.2.5.RELEASE&lt;/version&gt;
+&lt;/parent&gt;
+
+&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+            &lt;version&gt;2.3.2&lt;/version&gt;
+            &lt;configuration&gt;
+                &lt;source&gt;1.8&lt;/source&gt;
+                &lt;target&gt;1.8&lt;/target&gt;
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;
+</pre>
+<p>Place these elements before the <b>dependencies</b> element. You will also
+need to add the dependencies for Spring Boot and unit testing support:
+</p>
+<pre>
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</pre>
+<p>
+And dependencies for any Java libraries for logging and testing:
+</p>
+<pre>
+&lt;dependency&gt;
+    &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;
+    &lt;artifactId&gt;logback-classic&lt;/artifactId&gt;
+    &lt;version&gt;1.1.3&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;junit&lt;/groupId&gt;
+    &lt;artifactId&gt;junit&lt;/artifactId&gt;
+    &lt;version&gt;4.12&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.hamcrest&lt;/groupId&gt;
+    &lt;artifactId&gt;hamcrest-all&lt;/artifactId&gt;
+    &lt;version&gt;1.3&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
+<p>
+Using the example in the notes a a guide create a class with a <b>main</b> method 
+used to define the Spring Boot application using the <b>@SpringBootApplication</b>
+annotation. Check that you can compile this application.
+</p>
+
+<p><a href="solutions.html#Boot">Solutions</a></p>
+</li>
+
+<li><h2><a id="Fountain"/>Number Fountain</h2>
+<p>
+Define in interface with a <b>int nextInt()</b> method that will be used to generate 
+integer values (a number fountain).
+</p>
+<p>
+Define an implementation class for your number fountain interface that generates 
+the next even number (starting at 2) when the <b>int nextInt()</b> method is called.
+Define your class with the <b>@Component</b> annotation so that Spring knows to
+manage the objects of this class.
+</p>
+<p>
+Create a test class which uses Dependency Injection (<b>@Autowired</b>) to inject an
+even number fountain object into the test and verify that the first five numbers 
+generated are 2, 4, 6, 8 and 10. You will need to use the <b>@RunWith</b> and
+<b>@SpringApplicationConfiguration</b> annotations as described in the course notes in
+order to have Spring manage the test suite. Make sure you inject the object using
+the interface type(<b>Fountain</b>) and not the class type (<i>EvenFountain</i>).
+</p>
+
+<p><a href="solutions.html#Fountain">Solutions</a></p>
+</li>
+
+<li><h2><a id="Config"/>Configuring Spring</h2>
+<p>
+Create a Spring resources file <b>application.properties</b> and use this to set the 
+default Spring logging level to WARN and the default profile to <i>production</i>. Your
+even number fountain test case should continue to run without change.
+</p>
+
+<p><a href="solutions.html#Config">Solutions</a></p>
+</li>
+
+<li><h2><a id="Profile"/>Using Profiles</h2>
+<p>
+Refactor your existing even number fountain class to be used when an <i>even</i> profile is
+defined: you'll need to add an <b>@Profile</b> annotation to the <b>EvenFountain</b> class
+and an <b>@ActiveProfiles</b> annotation to the test class.
+</p>
+<p>
+When you have your existing even fountain test case working using a profile define a second
+<b>Fountain</b> class that generates odd numbers (starting at 1) that is enabled when
+an <i>odd</i> profile is defined and create a test suite for the odd number fountain. You'll
+need to create a new test class with an <i>odd</i> active profile.
+<p>
+
+<p><a href="solutions.html#Profile">Solutions</a></p>
+</li>
+
+<li><h2><a id="Properties"/>Using Properties</h2>
+<p>Add a property called <b>fountain.step</b> to the <b>application.properties</b>
+file and set this to 3. Create a new <b>Fountain</b> class that generates numbers
+starting at 1 and stepping forward by value of the <b>fountain.step</b> property.
+Inject the property value into the class using the <b>@Value</b> annotation and
+configure your class to be used when the <i>step</i> profile is used. 
+</p>
+<p>
+Write a test suite for your new fountain class (remember to set the active profile to
+<i>step</i>). the first five generated numbers should be 1, 4, 7, 10 and 13.
+</p>
+
+<p><a href="solutions.html#Properties">Solutions</a></p>
+</li>
+
+<li><h2><a id="Names"/>Names Lists, Constructors &amp; Profiles</h2>
+<p>
+This last example loads a list of names from both a plain text file (one name per line) or
+a JSON file. The exercise is to configure an interface and two concrete classes to support plain text files and JSON
+files and use the <b>application.properties</b> profile setting to decide which one to use. A single test case
+will either configuration scenario.
+</p>
+<p>Start by creating two test files:</p>
+<ol>
+<li><b>names.txt</b><pre>
+James
+Bill
+Gilad
+Guy
+Alex
+</pre></li>
+<li><b>names.json</b><pre>
+[ 
+  "James",
+  "Bill",
+  "Gilad",
+  "Guy",
+  "Alex"
+]
+</pre></li>
+</ol>
+<p>
+Place these files in your main resources folder. Define two profile property files that specify
+the locations of these files. For example create a file called <b>application-names-file.properties</b>
+which contains the following property:</p>
+<pre>
+names.file.path=classpath:names.txt
+</pre>
+<p>
+This will be used by a profile called <b>names-file</b>. Create a second application property file for
+the JSON file using the profile name <b>names-json</b>.
+<p>
+Next define an interface for obtaining the list of names:</p>
+<pre>
+public interface NamesList {
+    List&lt;String&gt; getNames();
+}
+</pre>
+<p>
+Create an implementation file that reads the contents of the text file into a list of names and
+have this class's <b>getNames</b>() method return a copy of this list. You will need to
+inject the <b>ResourceLoader</b> and file path into the constructor for your class following
+the example shown in the notes. Have your constructor read each line in the file and add 
+this line (trimmed to remove whitespace) to the list of names. Use an <b>@Profile</b>
+annotation to use this class with the <b>names-file</b> profile.
+</p>
+<p>
+Set the default profile to <b>names-file</b> and create the 
+following test case for validating that your load names from file  
+works correctly:</p>
+<pre>
+@RunWith( SpringJUnit4ClassRunner.class )
+@SpringApplicationConfiguration(classes = {Main.class})
+public class TestNames {
+    @Autowired
+    private NamesList namesList;
+
+    @Test
+    public void testFirst5Numbers () {
+        List&lt;String&gt; names = namesList.getNames();
+        List&lt;String&gt; expected = Arrays.asList(&quot;James&quot;, &quot;Bill&quot;, &quot;Gilad&quot;, &quot;Guy&quot;, &quot;Alex&quot;);
+        assertThat(names, is(expected));
+    }
+}
+</pre>
+<p>
+Add a second implementation class for the <b>NamesList</b> interface 
+and have this reads the names from the  JSON file and enable this
+class for the <b>names-json</b> profile. This code fragment for 
+converting the JSON object to a list of strings will be useful:
+</p>
+<pre>
+ObjectMapper mapper = new ObjectMapper();
+mapper.registerModule(new JavaTimeModule());
+names = mapper.readValue(
+        loader.getResource(path).getFile(),
+        new TypeReference&lt;List&lt;String&gt;&gt;(){});
+</pre>
+<p>
+Update your <b>application.properties</b> file to set the default profile 
+to <b>names-json</b> instead of <i>names-file</i> and without making any
+changes to your test code run the names test case again - it should pass.
+</p>
+
+<p><a href="solutions.html#Names">Solutions</a></p>
+</li>
+</ol>
+
+		</div>
+
+		<div id="footer">
+			<hr />
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

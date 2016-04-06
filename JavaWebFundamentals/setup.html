@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>WebApp Courses - Met Office Workstation Setup</title>
+  <link rel="stylesheet" href="etc/oldfrog.css" type="text/css" />
+</head>
+
+<body>
+
+		<div id="header">
+			<a href="index.html">
+				<img alt="Training Logo" src="etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="index.html">
+					<img alt="Up arrow" src="etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+
+<div id="body">
+	<h1>WebApp Courses - Met Office Workstation Setup</h1>
+
+    <h2>Met Office Windows Java Web Development Software</h2>
+    <p>
+    You will need to have the following software installed on your workstation:
+	</p>
+	<ul>
+	<li>IntelliJ Ultimate Edition (Community is acceptable)</li>
+	<li>Maven (unzipped to <b>C:\Apache\apache-maven-?</b> where ? is the version number)</li>
+	<li>Node.js</li>
+	</ul>
+	
+    <h2>Met Office IntelliJ Licence Configuration</h2>
+    <p>
+    Either use the official <a href="https://exxreldocs:8099/display/CMTEAM/How+to+get+a+licence+from+the+CM+team+licence+server">notes
+    for obtaining an IntelliJ licence</a> or follow these instructions:</p>
+    <p>Start up IntelliJ Ultimate and when prompted for a license:</p>
+    <ul>
+    <li>Select <b>License server</b></li>
+    <li>Enter <b>http://exxconfigmgmt:8082/licenseServer</b></li>
+    <li>Click on <b>OK</b> and accept the license agreement on the popup window</li>
+    </ul>
+
+    
+    
+    <h2>Met Office Maven Configuration on Windows</h2>
+    <p>
+    Ensure command line <b>Maven</b> is isntalled on your workstation in the 
+    folder <b>C:\apache\apache-maven-?</b> (? represents the version number).
+    </p>
+    <p>You will need to use the command line version of Maven to access IT security approved modules from the local 
+    <a href="https://exxmavenrepo:8443/artifactory/repo" target="_new">Artifactory Repository</a>. 
+    Full instructions are provided on the CM Web page:</p>
+    <ul>
+    <li><a href="https://exxreldocs:8099/display/CMTEAM/How+to+configure+Maven" target="mvninst">How to Configure Maven</a></li>
+    </ul> 
+    <p>Check the instructions on this CM Web page and use these where they differ from the following guide.</p>
+	<p>Install a JDK that allows communication with Artifactory.
+<ul>
+<li>Download a JDK from the Artifactory 'jdks' repository: 
+<a href="https://exxmavenrepo:8443/artifactory/" target="mvninst">https://exxmavenrepo:8443/artifactory/repo</a></li>
+<li>Unzip the JAR file to <b>C:\Java\</b>
+</li>
+</ul>
+<p>You will need to include the correct JDK and Maven in your Window's environment. Either follow 
+the steps below or copy and past the command shown after the instructions:</p>
+<p class="indent">Right Click on <span class="code">My Computer -> Properties -> Advanced System Settings -> Environment Variables</span></p>
+<ul>
+<li>Add a user level JAVA_HOME (environment variable) to point to the unzipped JDK folder in <b>C:\Java</b></li>
+<li>Add a user level _JAVA_OPTIONS varaible with the value -Dhttps.protocols=TLSv1
+<li>Add a user level M2_HOME (environment variable) to the maven location e.g. C:\apache\apache-maven-?\</li>
+<li>Edit the user level PATH variable and add <b>;%M2_HOME%\bin</b> to the end of the current value, create this variable if it does no exist</li>
+</ul>
+<p>You can setup the environment using the following commands (please verify the version numbers for Java and Maven):</p>
+<pre>
+setx JAVA_HOME C:\Java\jdk1.8.0_45_x64
+setx _JAVA_OPTIONS "-Dhttps.protocols=TLSv1"
+setx M2_HOME C:\Apache\apache-maven-3.2.2
+setx PATH "%PATH%;%JAVA_HOME%\bin;%M2_HOME%\bin"
+</pre>
+<p>Replace the file <b>C:\Users\{USERNAME}\.m2\settings.xml</b> with one from Artifactory:</p>
+<p class="indent"><a href="https://exxmavenrepo:8443/artifactory/meto-release/settings.xml" target="mvninst">
+https://exxmavenrepo:8443/artifactory/meto-release/settings.xml</a></p>
+<p>Where {USERNAME} is your Windows login ID both in the pathname and the <b>settings.xml</b> file contents. In the 
+file you will also need to replace {PASSWORD} with one obtained by logging in to
+<a href="https://exxmavenrepo:8443/artifactory/" target="mvninst">Artifactory</a> where you should:</p>
+<ul>
+<li>Click your user name in the top right hand corner</li>
+<li>Enter your current desktop password into the <i>Current Password</i> field</li>
+<li>Click <i>Unlock</i></li>
+<li>Copy the encrypted password</li>
+</ul>
+<p>Create a folder for the local Maven repository:</p>
+<pre class="indent">C:\Repository</pre>
+<p>Delete any existing Maven files in your local repository</p>
+<pre class="indent">C:\Users\{USERNAME}\.m2\repository</pre>
+<p>When using InteliJ set the JDK to point to the Artifactory JDK in <b>C:\Java</b> using the menu:</p>
+<p class="indent"><span class="code">File -> Other Settings -> Default Project Structure -> Project</span>: then configure the <b>Project SDK</b></p>
+<p>And configure InteliJ to use an external Maven command from <b>C:\apache\apache-maven-?</b> using the menu:</p>
+<p class="indent"><span class="code">File -> Other Settings -> Default Settings -> Build, Execution and Deployment -> Maven</span>: and edit the <b>Maven home directory</b></p>
+<p>You should also configure IntelliJ to use the Artifactory enabled JDK command when importing modules by setting: </p>
+<p class="indent"><span class="code">File -> Other Settings -> Default Settings -> Build, Execution and Deployment -> Maven -> Importing</span>: and edit the <b>JDK for Importer</b> to
+use the one defined by JAVA_HOME.</p>
+<p>
+Should ypu need to refresh the Maven repository from the command line just run the following command from the folder
+containing the <b>pom.xml</b> file:</p>
+<pre class="indent">mvn dependency:copy-dependencies</pre>
+	
+    <h2>Met Office Node.js Configuration on Windows</h2>
+    <p>
+    When Node.js is installed you will be able 
+    to use <b>npm</b> to install IT security approved modules from the local 
+    <a href="https://exxmavenrepo:8443/artifactory/" target="mvninst">Artifactory Repository</a>. You will find an npm command line
+    option in the Start -> node.js menu.</p>
+    <p>
+    Full instructions for configuring Maven access to Artifactory are provided on the CM Web page:</p>
+    <ul>
+    <li><a href="https://exxreldocs:8099/pages/viewpage.action?pageId=8160067" target="npminst">How to Authenticate NPM/Node.js</a></li>
+    </ul> 
+	<p>Check the instructions on this CM Web page and use these where they differ from the following guide.</p>
+	<p>
+	Create the <b>npm</b> command folder and cache using the following commands (replace {USERNAME} with your windows login ID):</p>
+<pre  class="indent">
+mkdir C:\Users\{USERNAME}\AppData\Roaming\npm
+mkdir C:\npm-cache
+</pre>
+<p>Create an <b>npm</b> configuration file to access the Artifactory repository by creating the file:</p>
+<pre class="indent">C:\Users\{USERNAME}\.npmrc</pre>
+<p>with the following content, replace {USERNAME} with your windows login ID and {KEY}
+as described later:</p>
+<pre class="indent">
+_auth={KEY}
+strict-ssl=false
+registry=https://exxmavenrepo:8443/artifactory/api/npm/npm-virtual
+cache=c:\npm-cache
+email={USERNAME}@metoffice.gov.uk
+always-auth=true
+proxy=http://webproxy.metoffice.gov.uk:8080/
+https-proxy=http://webproxy.metoffice.gov.uk:8080
+</pre>
+<p>
+To obtain your authentication key access the Artifactory web page:</p>
+<p class="indent"><a href="https://exxmavenrepo:8443/artifactory/api/npm/auth" target="mvninst">https://exxmavenrepo:8443/artifactory/api/npm/auth</a></p>
+<p>
+and copy the <b>_auth=</b> string of characters from the response.
+</p>
+<p>You will need to add <b>npm</b> to your Windows search path:</p>
+<p class="indent"><span class="code">Right Click on My Computer -> Properties -> Advanced System Settings -> Environment Variables</span></p>
+<p>
+If a USER setting for PATH exists edit it, otherwise create a new entry for PATH
+with the following:</p>
+<pre class="indent">C:\Users\{USERNAME}\AppData\Roaming\npm</pre>
+<p>Replace {USERNAME} with your login ID and save your settings. If you are adding this entry to an existing PATH
+value separate your entry from the others with a semi-colon (<b>;</b>).
+</p>
+
+    <h2>Npm General Concepts and Search Paths</h2>
+    <p>
+    Once node.js has been installed you can load modules using the <b>npm</b> command. Modules can
+    be loaded globally or locally. On Linux you'll need root access to install globally (/usr/local),
+    on windows globally means in your home directory (~/AppData/Roaming/npm). Install locally
+    means within the current folder when you ran the install (creates a sub-folder called <b>./node_modules</b>b>). 
+    a local install enables each project folder to maintain its own version of the application.
+    </p>
+    <p>
+    To execute the
+    installed application you will need to set your search path to include the required installation
+    binary folder. For global installs the path is</p>
+    <ul>
+    <li>Linux: <b></b>/usr/local/bin</li>
+    <li>Windows: ~/AppData/Roaming/npm (may have been added when node.js was installed). </li>
+    </ul>
+    <p>
+    For local installs on either platform add <b>./node_module</b>
+    to the search path.
+    </p>
+
+	<h3>Installing npm modules</h3>
+
+    <p>Install a global module with:</p>
+<pre  class="indent">
+npm -g install modules... 
+</pre>
+            <p>Omit the -g option for a local install (in the current directory).</p>
+            <p>To update all modules to latest release (same version):</p>
+<pre class="indent">
+npm -g update 
+</pre>
+            <p>To update a module to the latest version use:</p>
+<pre class="indent">
+npm -g update module@latest --save  
+</pre>
+           <p>Modules installed for the Web Application Development courses:</p>
+<pre class="indent">
+npm -g install jsdoc jshint
+npm -g install karma karma-jasmine karma-chrome-launcher karma-cli
+npm -g install phantomjs  karma-phantomjs-launcher
+npm -g install karma-junit-reporter
+</pre>
+<p>
+THe last testing tool is Protractor which may need to be loaded with a specific version number. Check with your 
+instructor about whether to use the latest version (omit @2.5.1 from the command below) or use the
+following older version:
+</p>
+<pre>
+npm -g install protractor@2.5.1
+</pre>
+	<p>Once <b>protractor</b> has been installed the <b>selenium</b> driver must be updated to use the latest version. 
+	Do this using the <b>webdriver-manager</b> command:
+<pre class="indent">
+webdriver-manager update --standalone --ignore_ssl --proxy=http://webproxy.metoffice.gov.uk:8080
+</pre>
+
+    <h2>Starting the H2 Database Server</h2>
+    <p>
+	Save the following batch commands to a file called <b>startH2.bat</b> and use this file to start H2
+	prior to running a web server that uses H2:</p>
+	<pre class="indent">
+set H2=C:\Repository\com\h2database\h2-1.4.188\h2-1.4.188.jar
+set JAVA=C:\Java\jdk1.8.0_45_x64\bin\java.exe
+%JAVA% -cp "%H2%;%CLASSPATH%" org.h2.tools.console
+	</pre>
+    
+    <h2>Oracle Database Driver</h2>
+    <p>
+    The Oracle database driver (<b>odjdbc6.jar</b>) is stored in the Artifcatory repository and can be downloaded
+    using the following Maven dependency:
+    </p>
+<pre class="indent">
+&lt;dependency&gt;
+    &lt;groupId&gt;com.oracle&lt;/groupId&gt;
+    &lt;artifactId&gt;ojdbc6&lt;/artifactId&gt;
+    &lt;version&gt;11.2.0.3.0&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
+<p>The training database can be accessed with the following URL:</p>
+<pre>
+spring.datasource.url=jdbc:oracle:thin:@//mocc01-zvopdb95:1521/moc
+</pre>
+<p>Your instructor will supply you with a username and password for this database if it is required.</p>
+ 
+</div>
+
+		<div id="footer">
+			<hr />
+
+			<p>
+				<span class="left">
+					<a href="index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+
+</body>
+</html>

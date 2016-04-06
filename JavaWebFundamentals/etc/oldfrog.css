@@ -1,0 +1,104 @@
+@CHARSET "ISO-8859-1";
+body {
+    font-family: sans-serif;
+}
+
+h1 {
+    color: #306191;
+}
+h2 {
+    color: #34689D;
+}
+h3, h4 {
+    color: #4080C0;
+}
+
+table {
+    border: 2px solid black;
+    border-collapse:collapse;
+    margin-left: 2em;
+}
+
+th {
+    border: 1px solid;
+    background-color: #999999; 
+    font-weight: bold; font-style: italic;
+    text-align: center;
+} 
+
+td {
+    border: 1px solid;
+    padding: 3pt 5pt;
+}
+
+li {
+    margin-bottom: 3pt;
+}
+
+.sep {
+    border-top: 1px solid #4080C0;
+    border-bottom: 1px solid #4080C0;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    width: 50%;
+}
+.code {
+    font-family: monospace;
+    font-size: 110%;
+    color: #000000;
+}
+
+.highlight {
+    font-size: 125%;
+    font-weight: bold;
+}
+
+.error {
+    font-weight: bold;
+    color: #CC0000;
+}
+.info {
+    font-weight: bold;
+    color: #006699;
+}
+
+.border {
+    border-style: solid;
+    border-width: 2px;
+    padding: 1em 3em;
+    width: 80%;
+}
+
+.indent {
+    margin-left: 24px;
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+
+.break {
+    float: none;
+}
+
+.top {
+    vertical-align: top;
+}
+
+ol li pre {
+    margin-left: 20px;
+    padding: 5px;
+    background-color: #eee;
+    width: 80%;
+}
+
+pre.indent {
+    margin-left: 20px;
+    padding: 5px;
+    background-color: #eee;
+    width: 80%;
+}

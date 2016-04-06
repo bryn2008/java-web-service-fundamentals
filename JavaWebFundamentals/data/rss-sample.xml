@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+  <atom:link xmlns:atom="http://www.w3.org/2005/Atom" href="http://www.metoffice.gov.uk/xml/news_rss.xml" rel="self" type="application/rss+xml"/>
+    <title>Met Office News Releases</title>
+    <link>http://www.metoffice.gov.uk/</link>
+    <description>News Releases from the Met Office</description>
+    <language>en</language>
+    <copyright>© Crown copyright</copyright>
+    <pubDate>Mon, 06 Dec 2010 10:27:54 GMT</pubDate>
+    <dc:title>Met Office News Releases</dc:title>
+    <dc:creator>Met Office, FitzRoy Road, Exeter, Devon, EX1 3PB, United Kingdom</dc:creator>
+    <dc:description>News Releases from the Met Office</dc:description>
+    <dc:publisher>Met Office, FitzRoy Road, Exeter, Devon, EX1 3PB, United Kingdom</dc:publisher>
+    <dc:contributor>Met Office, FitzRoy Road, Exeter, Devon, EX1 3PB, United Kingdom</dc:contributor>
+    
+    <dc:type>Reference</dc:type>
+    <dc:format>text/html</dc:format>
+    <dc:identifier>http://www.metoffice.gov.uk/news/rss/main</dc:identifier>
+    
+    <dc:coverage>UK</dc:coverage>
+    
+    <image><link>http://www.metoffice.gov.uk/</link>
+      <title>Met Office News Releases</title>
+      <url>http://www.metoffice.gov.uk/media/image/h/m/logo_crop.gif</url>
+      <link>http://www.metoffice.gov.uk/events/rss</link>
+      <description>Met Office logo</description>
+    </image>
+    <item>
+      <title>Met Office at RenewableUK Conference</title>
+      <link>http://www.metoffice.gov.uk/news/releases/archive/2011/renewableuk-2011</link>
+      <description>Met Office experts will be at the RenewableUK 2011 Annual Conference and Exhibition in Manchester this week to demonstrate how world leading science can help the wind energy market.</description>
+      <enclosure url="http://www.metoffice.gov.uk/media/image/9/8/visualeyes-76x76.jpg" length="1679" type="image/jpeg"/>
+      <pubDate>Tue, 25 Oct 2011 10:00:00 GMT</pubDate>
+      <guid isPermaLink="false">http://www.metoffice.gov.uk/news/releases/archive/2011/renewableuk-2011</guid>
+      <dc:title>Met Office at RenewableUK Conference</dc:title>
+      <dc:creator>Met Office, FitzRoy Road, Exeter, Devon, EX1 3PB, United Kingdom</dc:creator>
+      <dc:description>Met Office experts will be at the RenewableUK 2011 Annual Conference and Exhibition in Manchester this week to demonstrate how world leading science can help the wind energy market.</dc:description>
+      <dc:publisher>Met Office, FitzRoy Road, Exeter, Devon, EX1 3PB, United Kingdom</dc:publisher>
+      <dc:contributor>Met Office, FitzRoy Road, Exeter, Devon, EX1 3PB, United Kingdom</dc:contributor>
+      
+      <dc:type>Reference</dc:type>
+      <dc:format>text/html</dc:format>
+      <dc:identifier>http://www.metoffice.gov.uk/news/releases/archive/2011/renewableuk-2011</dc:identifier>
+      
+      <dc:coverage>UK</dc:coverage>
+      
+    </item>
+    <item>
+      <title>Preparing for weather this winter</title>
+      <link>http://www.metoffice.gov.uk/news/releases/archive/2011/being-prepared</link>
+      <description>This week sees the UK and devolved Governments launch their 'Get Ready for Winter' campaigns and websites.</description>
+      <enclosure url="http://www.metoffice.gov.uk/media/image/g/6/frost-web.jpg" length="6265" type="image/jpeg"/>
+      <pubDate>Mon, 24 Oct 2011 10:16:21 GMT</pubDate>
+      <guid isPermaLink="false">http://www.metoffice.gov.uk/news/releases/archive/2011/being-prepared</guid>
+      <dc:title>Preparing for weather this winter</dc:title>
+      <dc:creator>Met Office, FitzRoy Road, Exeter, Devon, EX1 3PB, United Kingdom</dc:creator>
+      <dc:description>This week sees the UK and devolved governments launch their 'Get Ready for winter' campaigns and websites.</dc:description>
+      <dc:publisher>Met Office, FitzRoy Road, Exeter, Devon, EX1 3PB, United Kingdom</dc:publisher>
+      <dc:contributor>Met Office, FitzRoy Road, Exeter, Devon, EX1 3PB, United Kingdom</dc:contributor>
+      
+      <dc:type>Press release</dc:type>
+      <dc:format>text/html</dc:format>
+      <dc:identifier>http://www.metoffice.gov.uk/news/releases/archive/2011/being-prepared</dc:identifier>
+      
+      <dc:coverage>UK</dc:coverage>
+      
+    </item>
+    <item>
+      <title>International stage for Met Office scientists</title>
+      <link>http://www.metoffice.gov.uk/news/releases/archive/2011/wcrp-conference</link>
+      <description>Met Office science will play a central role at an international event attracting hundreds of climate scientists from all over the world.</description>
+      <enclosure url="http://www.metoffice.gov.uk/media/image/t/0/globe.jpg" length="2036" type="image/jpeg"/>
+      <pubDate>Mon, 24 Oct 2011 09:51:20 GMT</pubDate>
+      <guid isPermaLink="false">http://www.metoffice.gov.uk/news/releases/archive/2011/wcrp-conference</guid>
+      <dc:title>International stage for Met Office scientists</dc:title>
+      <dc:creator>Met Office, FitzRoy Road, Exeter, Devon, EX1 3PB, United Kingdom</dc:creator>
+      <dc:description>Met Office science will play a central role at the Open Science Conference of the World Climate Research Programme.</dc:description>
+      <dc:publisher>Met Office, FitzRoy Road, Exeter, Devon, EX1 3PB, United Kingdom</dc:publisher>
+      <dc:contributor>Met Office, FitzRoy Road, Exeter, Devon, EX1 3PB, United Kingdom</dc:contributor>
+      
+      <dc:type>Reference</dc:type>
+      <dc:format>text/html</dc:format>
+      <dc:identifier>http://www.metoffice.gov.uk/news/releases/archive/2011/wcrp-conference</dc:identifier>
+      
+      <dc:coverage>UK</dc:coverage>
+      
+    </item>
+    <item>
+      <title>Met Office Hadley Centre appoints new head</title>
+      <link>http://www.metoffice.gov.uk/news/releases/archive/2011/stephen_belcher</link>
+      <description>The Met Office is delighted to announce the appointment of Professor Stephen Belcher as Head of the Met Office Hadley Centre.</description>
+      <enclosure url="http://www.metoffice.gov.uk/media/image/j/k/304x250-stephen-belcher.jpg" length="8650" type="image/jpeg"/>
+      <pubDate>Mon, 17 Oct 2011 11:35:26 GMT</pubDate>
+      <guid isPermaLink="false">http://www.metoffice.gov.uk/news/releases/archive/2011/stephen_belcher</guid>
+      <dc:title>Met Office Hadley Centre appoints new head</dc:title>
+      <dc:creator>Met Office, FitzRoy Road, Exeter, Devon, EX1 3PB, United Kingdom</dc:creator>
+      <dc:description>Professor Stephen Belcher has been announced as the new Head of the Met Office Hadley Centre.</dc:description>
+      <dc:publisher>Met Office, FitzRoy Road, Exeter, Devon, EX1 3PB, United Kingdom</dc:publisher>
+      <dc:contributor>Met Office, FitzRoy Road, Exeter, Devon, EX1 3PB, United Kingdom</dc:contributor>
+      
+      <dc:type>Reference</dc:type>
+      <dc:format>text/html</dc:format>
+      <dc:identifier>http://www.metoffice.gov.uk/news/releases/archive/2011/stephen_belcher</dc:identifier>
+      
+      <dc:coverage>UK</dc:coverage>
+      
+    </item>
+  </channel>
+</rss>

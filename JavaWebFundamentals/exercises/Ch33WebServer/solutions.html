@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>REST Web Server Solutions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>REST Web Server - Solutions</h1>
+
+			<p>These are suggested solutions for some of the exercises in this
+				chapter. There are
+				usually several ways to solve a problem and the solutions provided
+				illustrate
+				one approach. 
+			</p>
+<ol>
+
+<li><h2><a id="Boot"/>Spring Boot</h2>
+<p>All the code has been provided in this question. Additional 
+Spring Boot configuration files can be found in the solutions for the
+first question of the previous Spring Boot exercises.
+
+
+<p><a href="index.html#Boot">Questions</a></p>
+</li>
+
+<li><h2><a id="Rest"/>Spring Boot REST Server</h2>
+<p><b></b> class</p>
+<pre>
+@RequestMapping("/start")
+String start() {
+    return "REST service started";
+}
+</pre>
+<p><b>BasicRestController.java</b> class</p>
+<pre>
+
+package solutions;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class BasicRestController {
+
+    @RequestMapping("/start")
+    String start() {
+        return "REST service started";
+    }
+
+}
+</pre>
+
+
+<p><a href="index.html#Rest">Questions</a></p>
+</li>
+
+<li><h2><a id="Path"/>URL Path Parameters</h2>
+<p>Additional method in <b>BasicRestController.java</b></p>
+<pre>
+@RequestMapping("/upper/{value}")
+String upper(@PathVariable String value) {
+    return value.toUpperCase();
+}
+</pre>
+
+
+<p><a href="index.html#Path">Questions</a></p>
+</li>
+
+<li><h2><a id="Fountain"/>Number Fountain Web Service</h2>
+<p><b>FountainController.java</b> class</p>
+<pre>
+package solutions;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/fountain&quot;)
+public class FountainController {
+    @Autowired
+    private Fountain fountain;
+
+    @RequestMapping(&quot;/list/{n}&quot;)
+    List&lt;Integer&gt; list(@PathVariable int n) {
+        List&lt;Integer&gt; list = new ArrayList&lt;&gt;(n);
+        while (list.size() &lt; n) {
+            list.add(fountain.nextInt());
+        }
+        return list;
+    }
+}
+</pre>
+
+<p><a href="index.html#Fountain">Questions</a></p>
+</li>
+</ol>
+
+
+		</div>
+
+		<div id="footer">
+			<hr />
+
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

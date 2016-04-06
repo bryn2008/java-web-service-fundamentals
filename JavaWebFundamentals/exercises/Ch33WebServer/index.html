@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>REST Web Server - Questions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>REST Web Server - Questions</h1>
+
+			<p>
+				These exercises are designed to expand on the topics introduced
+				in the
+				<strong>REST Web Server</strong>
+				chapter of the Java Development training course.
+			</p>
+
+			<p>You can attempt the exercises in any order but the later
+				exercises tend to be more complex and require more time to complete. You
+				are not expected to complete all the exercises in the time available.
+				Just do as many as you can do, or want to do, and
+				try to find time after the course has finished to return to complete
+				these exercises. If you are unsure what to do, or need advice
+				as you work through the exercises then please ask your
+				instructor for additional information.</p>
+			
+			<p>The purpose of these exercises is to build a simple REST web server using 
+Spring Boot.
+</p>
+<p>
+These exercises build on the exercises in the previous Spring Boot chapter. If you have not yet
+configured a Spring boo application you should do so before starting these exercises.
+</p>
+<ol>
+
+<li><h2><a id="Boot"/>Spring Boot</h2>
+<p>
+Using your Java Spring Boot project and support for the REST web server to your POM: 
+</p>
+<pre>
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</pre>
+<p>
+You will need a class with a <b>main</b> method to create the web server by
+calling the <b>StringApplication.run</b>() passing the current class
+as a parameter. This class should be annotated with <b>@SpringBootApplication</b>For example:
+</p>
+<pre>
+package solutions;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(Main.class, args);
+    }
+}</pre>
+<p>
+You can start the Spring Boot server by running this annotated main class.
+Ensure you can serve up static pages from the
+<b>public</b> folder by creating a new folder called <b>src/web</b>, in IntelliJ mark this
+as a <b>Resources Root</b> folder, and create the <b>src/web/public</b> folder for your
+static HTML files. A simple HTML5 <b>index.html</b> page would be:</p>
+<pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;title&gt;Exams Web Application&lt;/title&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/styles.css&quot; type=&quot;text/css&quot; &gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Web Application&lt;/h1&gt;
+&lt;p&gt;Server started.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p><a href="solutions.html#Boot">Solutions</a></p>
+</li>
+
+<li><h2><a id="Rest"/>Spring Boot REST Server</h2>
+<p>
+Using your Spring server from the previous question extend the service to have 
+a single REST endpoint as follows:
+</p>
+<ul>
+<li><a href="http://localhost:8080/start" target="webapp">http://localhost:8080/start</a>
+- return the string <i>Service running</i></li>
+</ul>
+<p>
+You will need to create a POJO class annotated with <b>@RestController</b> and provide
+a single method annotated with <b>@RequestMapping("/start")</b> to respond to the <i>start</i> URL.
+</p>
+
+<p><a href="solutions.html#Rest">Solutions</a></p>
+</li>
+
+<li><h2><a id="Path"/>URL Path Parameters</h2>
+<p>
+Refactor your service to support a URL containing a path parameter and have the 
+end point return that parameter as an upper case string. For example:
+</p>
+<ul>
+<li><a href="http://localhost:8080/upper/rest" target="webapp">http://localhost:8080/upper/rest</a>
+- should respond with <i>REST</i></li>
+</ul>
+
+<p><a href="solutions.html#Path">Solutions</a></p>
+</li>
+
+<li><h2><a id="Fountain"/>Number Fountain Web Service</h2>
+<p>
+This exercise builds on your solution to the previous chapter with a number fountain generating
+odd numbers or the following start classes:</p>
+<ul>
+<li><a href="Fountain.java" target="src">Fountain.java</a></li>
+<li><a href="OddFountain.java" target="src">OddFountain.java</a></li>
+<li><a href="application.properties" target="src">application.properties</a></li>
+</ul>
+<p>
+Create a second REST controller class that has a URL request mapping of <b>fountain</b>
+and a single method that has an endpoint of <b>/list/{n}</b> where <i>n</i> is the
+count of the numbers to generate. You can test your web service manually using the URL:
+</p>
+<ul>
+<li><a href="http://localhost:8080/fountain/list/5" target="webapp">http://localhost:8080/fountain/list/5</a></li>
+</ul>
+<p>
+which should display the value <b>[1, 3, 5, 7, 9]</b>. Call this web
+service gain with a count of 3:</p>
+<ul>
+<li><a href="http://localhost:8080/fountain/list/3" target="webapp">http://localhost:8080/fountain/list/3</a></li>
+</ul>
+<p>And you should see the next three odd
+numbers: <b>[11, 13, 15]</b>
+</p>
+
+<p><a href="solutions.html#Fountain">Solutions</a></p>
+</li>
+</ol>
+
+		</div>
+
+		<div id="footer">
+			<hr />
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

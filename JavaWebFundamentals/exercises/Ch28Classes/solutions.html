@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Classes &amp; Objects Solutions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Classes &amp; Objects - Solutions</h1>
+
+			<p>These are suggested solutions for some of the exercises in this
+				chapter. There are
+				usually several ways to solve a problem and the solutions provided
+				illustrate
+				one approach. 
+			</p>
+<ol>
+
+<li><h2><a id="Triangle"/>Triangles</h2>
+<p>Triangle class:</p>
+<pre>
+package solutions;
+
+import java.util.Arrays;
+
+public class Triangle {
+    private double[] sides = new double[3];
+
+    public Triangle(double[] sides) {
+        this.sides = Arrays.copyOf(sides, sides.length);
+        Arrays.sort(this.sides);
+        if (sides.length != 3) {
+            throw new IllegalArgumentException("Triangles have 3 sides");
+        }
+        if (sides[0]&lt;=0 || sides[1]&lt;=0 || sides[2]&lt;=0) {
+            throw new IllegalArgumentException("Triangle sides must be greater than zero");
+        }
+        if (sides[0]+sides[1] &lt;= sides[2]) {
+            throw new IllegalArgumentException("Invalid triangle");
+        }
+    }
+
+    public Triangle(double s1, double s2, double s3){
+        this(new double[] {s1, s2, s3});
+    }
+
+    @Override
+    public String toString() {
+        return String.format("(%.2f, %.2f, %.2f)", sides[0], sides[1], sides[2]);
+    }
+    public boolean isIsosceles() {
+        return !isEquilateral() &amp;&amp; (sides[0]==sides[1] || sides[1]==sides[2] || sides[0]==sides[2]);
+    }
+    public boolean isEquilateral() {
+        return sides[0]==sides[1] &amp;&amp; sides[1]==sides[2];
+    }
+
+    public boolean isRightAngled() {
+        return Math.abs(sides[0]*sides[0] + sides[1]*sides[1] - sides[2]*sides[2]) &lt; 1.e-5;
+    }
+}
+</pre>
+<p>Main test class:</p>
+<pre>
+package solutions;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class MainTriangle {
+    private static final Logger logger = LoggerFactory.getLogger(MainTriangle.class);
+
+    private static final double[][] tests = {
+        {2, 3, 4},
+        {3, 3, 2},
+        {3, 3, 3},
+        {5,4,3},
+    };
+    public static void main(String[] args) {
+        for (double[] sides : tests) {
+            Triangle triangle = new Triangle(sides);
+            logger.info(String.format("%s %s%s%s",
+                    triangle,
+                    triangle.isIsosceles() ? "isosceles" : "",
+                    triangle.isEquilateral() ? "equilateral" : "",
+                    triangle.isRightAngled() ? "right angled"  : ""));
+        }
+        try {
+            Triangle faulty = new Triangle(1, 2, 3);
+            logger.warn("Didn't raise error for (1, 2, 3)");
+        }
+        catch (IllegalArgumentException ex) {
+            logger.error(ex.toString());
+        }
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Triangle">Questions</a></p>
+</li>
+
+<li><h2><a id="Lottery"/>Lottery</h2>
+<p>Ticket class:</p>
+<pre>
+package solutions;
+
+import java.util.*;
+
+public class Ticket {
+    private static int SIZE = 6;
+    private static int LO = 1;
+    private static int HI = 59;
+    private Set&lt;Integer&gt; numbers = new TreeSet&lt;&gt;();
+
+    public Ticket() {
+        Random random = new Random();
+        while (numbers.size() &lt; SIZE) {
+            numbers.add(random.nextInt(HI-LO+1)+LO);
+        }
+    }
+
+    public Ticket(List&lt;Integer&gt; numbers) {
+        numbers.addAll(numbers);
+        if (numbers.size() != SIZE) {
+            throw new IllegalArgumentException(String.format(&quot;Ticket must have {} unique numbers&quot;, SIZE));
+        }
+        if (Collections.min(numbers)&lt;LO || Collections.max(numbers)&gt;HI) {
+            throw new IllegalArgumentException(String.format(&quot;Ticket numbers must be between {} and {}&quot;, LO, HI));
+        }
+    }
+
+    @Override
+    public String toString() {
+        return String.format(&quot;Ticket %s&quot;, numbers);
+    }
+
+    public List&lt;Integer&gt; match(Ticket other) {
+        List&lt;Integer&gt; copy = new ArrayList&lt;Integer&gt;(numbers);
+        copy.retainAll(other.numbers);
+        return copy;
+    }
+}
+</pre>
+<p>Main test class:</p>
+<pre>
+package solutions;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainTicket {
+    private static final Logger logger = LoggerFactory.getLogger(MainTicket.class);
+
+    private static final int WINS = 3;
+
+    public static void main(String[] args) {
+        List&lt;Ticket&gt; tickets = new ArrayList&lt;&gt;();
+        while (tickets.size() &lt; 10) {
+            tickets.add(new Ticket());
+        }
+        Ticket draw = new Ticket();
+        for (Ticket ticket : tickets) {
+            int matched = ticket.match(draw).size();
+            logger.info(&quot;{} matched {} {}&quot;,
+                    ticket, matched, matched&gt;=WINS?&quot;WINNER&quot;:&quot;&quot;);
+        }
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Lottery">Questions</a></p>
+</li>
+
+<li><h2><a id="Planets"/>Planetary Data</h2>
+<p>Planet class:
+<pre>
+package solutions;
+
+public class Planet {
+    private String name;
+    private double distance;
+    private double year;
+
+    public Planet(String name, double distance, double year) {
+        this.name = name;
+        this.distance = distance;
+        this.year = year;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(&quot;%s: distance=%.2f, year=%.2f&quot;, name, distance ,year);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public double getYear() {
+        return year;
+    }
+}
+</pre>
+<p>SolarSystem class:
+<pre>
+package solutions;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class SolarSystem {
+    List&lt;Planet&gt; planets = new ArrayList&lt;&gt;();
+
+    public SolarSystem() {
+        planets.add(new Planet(&quot;Mercury&quot;, 0.39, 88.0));
+        planets.add(new Planet(&quot;Neptune&quot;, 30.06, 59800));
+        planets.add(new Planet(&quot;Jupiter&quot;, 5.2, 4331));
+        planets.add(new Planet(&quot;Uranus&quot;, 19.18, 30589));
+        planets.add(new Planet(&quot;Mars&quot;, 1.52, 687.0));
+        planets.add(new Planet(&quot;Earth&quot;, 1, 365.2));
+        planets.add(new Planet(&quot;Venus&quot;, 0.72, 224.7));
+        planets.add(new Planet(&quot;Saturn&quot;, 9.54, 10747));
+    }
+
+    @Override
+    public String toString() {
+        return planets.toString();
+    }
+
+    public List&lt;Planet&gt; list() {
+        return new ArrayList&lt;Planet&gt;(planets);
+    }
+}
+</pre>
+<p>Main test class:
+<pre>
+package solutions;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class MainPlanet {
+    private static final Logger logger = LoggerFactory.getLogger(MainPlanet.class);
+
+    public static void main(String[] args) {
+        SolarSystem system = new SolarSystem();
+        for (Planet planet : system.list()) {
+            logger.info(String.format(&quot;%-8s %8.2f %8.1f&quot;,planet.getName(), planet.getDistance(), planet.getYear()));
+        }
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Planets">Questions</a></p>
+</li>
+</ol>
+
+
+		</div>
+
+		<div id="footer">
+			<hr />
+
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Spring Boot Solutions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Spring Boot - Solutions</h1>
+
+			<p>These are suggested solutions for some of the exercises in this
+				chapter. There are
+				usually several ways to solve a problem and the solutions provided
+				illustrate
+				one approach. 
+			</p>
+<ol>
+
+<li><h2><a id="Boot"/>Configuring Spring Boot</h2>
+<pre>
+package solutions;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(Main.class, args);
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Boot">Questions</a></p>
+</li>
+
+<li><h2><a id="Fountain"/>Number Fountain</h2>
+<p><b>Fountain.java</b> class</p>
+<pre>
+package solutions;
+
+public interface Fountain {
+    int nextInt();
+}
+</pre>
+<p><b>EvenFountain.java</b> class</p>
+<pre>
+package solutions;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class EvenFountain  implements Fountain{
+    private int next = 0;
+    @Override
+    public int nextInt() {
+        next += 2;
+        return next;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("EvenFountain next=%d", next);
+    }
+}
+</pre>
+<p>Test case</p>
+<pre>
+package solutions;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+@RunWith( SpringJUnit4ClassRunner.class )
+@SpringApplicationConfiguration(classes = {Main.class})
+public class TestFountain {
+    @Autowired
+    private Fountain fountain;
+
+    @Test
+    public void testFirst5Numbers () {
+        int[] numbers = new int[] {
+            fountain.nextInt(), fountain.nextInt(),
+            fountain.nextInt(), fountain.nextInt(),
+            fountain.nextInt()
+        };
+        assertThat(numbers, is(new int[] {2,4,6,8,10}));
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Fountain">Questions</a></p>
+</li>
+
+<li><h2><a id="Config"/>Configuring Spring</h2>
+<p><b>application.properties</b> resource file</p>
+<pre>
+logging.level.org.springframework=WARN
+spring.profiles.active=production
+</pre>
+
+
+<p><a href="index.html#Config">Questions</a></p>
+</li>
+
+<li><h2><a id="Profile"/>Using Profiles</h2>
+<p><b>EvenFountain.java</b> class</p>
+<pre>
+package solutions;
+
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
+@Component
+@Profile("even")
+public class EvenFountain  implements Fountain{
+    private int next = 0;
+    @Override
+    public int nextInt() {
+        next += 2;
+        return next;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("EvenFountain next=%d", next);
+    }
+}
+</pre>
+<p>Even fountain test suite</p>
+<pre>
+package solutions;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+@RunWith( SpringJUnit4ClassRunner.class )
+@SpringApplicationConfiguration(classes = {Main.class})
+@ActiveProfiles("even")
+public class TestEvenFountain {
+    @Autowired
+    private Fountain fountain;
+
+    @Test
+    public void testFirst5Numbers () {
+        int[] numbers = new int[] {
+            fountain.nextInt(), fountain.nextInt(),
+            fountain.nextInt(), fountain.nextInt(),
+            fountain.nextInt()
+        };
+        assertThat(numbers, is(new int[] {2,4,6,8,10}));
+    }
+}
+</pre>
+<p><b>OddFountain.java</b> class</p>
+<pre>
+package solutions;
+
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
+@Component
+@Profile("odd")
+public class OddFountain implements Fountain{
+    private int next = -1;
+    @Override
+    public int nextInt() {
+        next += 2;
+        return next;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("OddFountain next=%d", next);
+    }
+}
+</pre>
+<p>Odd fountain test suite</p>
+<pre>
+package solutions;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+@RunWith( SpringJUnit4ClassRunner.class )
+@SpringApplicationConfiguration(classes = {Main.class})
+@ActiveProfiles("odd")
+public class TestOddFountain {
+    @Autowired
+    private Fountain fountain;
+
+    @Test
+    public void testFirst5Numbers () {
+        int[] numbers = new int[] {
+            fountain.nextInt(), fountain.nextInt(),
+            fountain.nextInt(), fountain.nextInt(),
+            fountain.nextInt()
+        };
+        assertThat(numbers, is(new int[] {1,3,5,7,9}));
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Profile">Questions</a></p>
+</li>
+
+<li><h2><a id="Properties"/>Using Properties</h2>
+<p><b>application.properties</b> resource file</p>
+<pre>
+fountain.step=3
+</pre>
+<p><b>StepFountain.java</b> class</p>
+<pre>
+package solutions;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
+@Component
+@Profile("step")
+public class StepFountain implements Fountain{
+    @Value("${fountain.step}")
+    int step;
+
+    private int next = 1;
+    @Override
+    public int nextInt() {
+        int value = next;
+        next += step;
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("StepFountain step=%d next=%d", step, next);
+    }
+}
+</pre>
+<p>Step fountain test suite</p>
+<pre>
+package solutions;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+@RunWith( SpringJUnit4ClassRunner.class )
+@SpringApplicationConfiguration(classes = {Main.class})
+@ActiveProfiles("step")
+public class TestStepFountain {
+    @Autowired
+    private Fountain fountain;
+
+    @Test
+    public void testFirst5Numbers () {
+        int[] numbers = new int[] {
+            fountain.nextInt(), fountain.nextInt(),
+            fountain.nextInt(), fountain.nextInt(),
+            fountain.nextInt()
+        };
+        assertThat(numbers, is(new int[] {1,4,7,10,13}));
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Properties">Questions</a></p>
+</li>
+
+<li><h2><a id="Names"/>Names Lists, Constructors &amp; Profiles</h2>
+<p><b>application.properties</b> resource file for the text file</p>
+<pre>
+logging.level.org.springframework=WARN
+spring.profiles.active=production,names-file
+</pre>
+<p><b>application-names-file.properties</b> resource file</p>
+<pre>
+names.file.path=classpath:names.txt
+</pre>
+<p><b>NamesList.java</b> interface</p>
+<pre>
+package solutions;
+
+import java.util.List;
+
+public interface NamesList {
+    List&lt;String&gt; getNames();
+}
+</pre>
+<p><b>NamesFile.java</b> class</p>
+<pre>
+package solutions;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Component;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
+@Profile(&quot;names-file&quot;)
+public class NamesFile implements NamesList {
+    private List&lt;String&gt; names = new ArrayList&lt;&gt;();
+
+    @Autowired
+    public NamesFile(ResourceLoader loader, @Value(&quot;${names.file.path}&quot;) String path) throws IOException {
+        try (BufferedReader reader = Files.newBufferedReader(loader.getResource(path).getFile().toPath())) {
+            String name;
+            while ((name = reader.readLine()) != null) {
+                names.add(name.trim());
+            }
+        }
+    }
+
+    @Override
+    public List&lt;String&gt; getNames() {
+        return new ArrayList&lt;String&gt;(names);
+    }
+}
+</pre>
+<p>Names list test suite</p>
+<pre>
+package solutions;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+@RunWith( SpringJUnit4ClassRunner.class )
+@SpringApplicationConfiguration(classes = {Main.class})
+public class TestNames {
+    @Autowired
+    private NamesList namesList;
+
+    @Test
+    public void testFirst5Numbers () {
+        List&lt;String&gt; names = namesList.getNames();
+        List&lt;String&gt; expected = Arrays.asList(&quot;James&quot;, &quot;Bill&quot;, &quot;Gilad&quot;, &quot;Guy&quot;, &quot;Alex&quot;);
+        assertThat(names, is(expected));
+    }
+}
+</pre>
+<p><b>application.properties</b> resource file for the JSON file</p>
+<pre>
+logging.level.org.springframework=WARN
+spring.profiles.active=production,names-json
+</pre>
+<p><b>application-names-json.properties</b> resource file</p>
+<pre>
+names.json.path=classpath:names.json
+</pre>
+<p><b>NamesJson.java</b> class</p>
+<pre>
+package solutions;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
+@Profile(&quot;names-json&quot;)
+public class NamesJson implements NamesList {
+    private List&lt;String&gt; names = new ArrayList&lt;&gt;();
+
+    @Autowired
+    public NamesJson(ResourceLoader loader, @Value(&quot;${names.json.path}&quot;) String path) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        names = mapper.readValue(
+                loader.getResource(path).getFile(),
+                new TypeReference&lt;List&lt;String&gt;&gt;(){});
+    }
+
+    @Override
+    public List&lt;String&gt; getNames() {
+        return new ArrayList&lt;String&gt;(names);
+    }
+}
+</pre>
+<p><a href="index.html#Names">Questions</a></p>
+</li>
+</ol>
+
+
+		</div>
+
+		<div id="footer">
+			<hr />
+
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

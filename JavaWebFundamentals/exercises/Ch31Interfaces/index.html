@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Interfaces - Questions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Interfaces - Questions</h1>
+
+			<p>
+				These exercises are designed to expand on the topics introduced
+				in the
+				<strong>Interfaces</strong>
+				chapter of the Java Development training course.
+			</p>
+
+			<p>You can attempt the exercises in any order but the later
+				exercises tend to be more complex and require more time to complete. You
+				are not expected to complete all the exercises in the time available.
+				Just do as many as you can do, or want to do, and
+				try to find time after the course has finished to return to complete
+				these exercises. If you are unsure what to do, or need advice
+				as you work through the exercises then please ask your
+				instructor for additional information.</p>
+			
+			<p>The purpose of these exercises is to work with classes that implement interfaces and
+to specify class behaviour through interfaces. Continue to use JUnit test cases to exercise the functionality 
+of the classes you develop.
+</p>
+<ol>
+
+<li><h2><a id="Sorting"/>Sorting Planetary Data</h2>
+<p>
+In a previous chapter your were asked to define a class to represent a
+planet and another to represent the solar system holding a list of planets
+initialised with the following data:
+</p>
+<table><thead><tr><td>Planet</td><td>AU from Sun</td><td>Diameter</td></tr></thead>
+<tbody>
+<tr><td>"Mercury",</td><td>0.39,</td><td>4879</td></tr>
+<tr><td>"Neptune",</td><td>30.06,</td><td>49528</td></tr>
+<tr><td>"Jupiter",</td><td>5.2,</td><td>142984</td></tr>
+<tr><td>"Uranus",</td><td>19.18,</td><td>51118</td></tr>
+<tr><td>"Mars",</td><td>1.52,</td><td>6792</td></tr>
+<tr><td>"Earth",</td><td>1,</td><td>12756</td></tr>
+<tr><td>"Venus",</td><td>0.72,</td><td>12104</td></tr>
+<tr><td>"Saturn",</td><td>9.54,</td><td>120536</td></tr>
+</tbody>
+</table>
+<p>
+Use your solution to the previous exercise or the following classes as a starting point for this
+question:</p>
+<ul>
+<li><a href="Planet.java" target="src">Planet.java</a></li>
+<li><a href="SolarSystem.java" target="src">SolarSystem.java</a></li>
+</ul>
+<p>
+You will not need to change the <b>Planet</b> class but will be extending the
+<b>SolarSystem</b> class to include additional functionality.
+</p>
+<p>
+Add a <b>ListByDistance</b>() method to the <b>SolarSystem</b> class to return a copy
+of the planet is sorted by distance from the sun so that the first entry is Mercury, and
+the last is Neptune. You will need to define a class that implements the
+<b>Comparator&lt;Planet&gt;</b> interface. Write a test case for your class.
+</p>
+<p>
+Add a second <b>SolarSystem.listByDiameter</b>() method and have this use an anonymous
+class (of type <b>Comparator&lt;Planet&gt;</b>) to return a copy of the planet list sorted by diameter. Write a test
+case for this method.
+</p>
+
+<p><a href="solutions.html#Sorting">Solutions</a></p>
+</li>
+
+<li><h2><a id="Shapes"/>Shape Refactoring</h2>
+<p>
+In the previous exercises on inheritance you created a hierarchy of shapes sub classes a 
+<b>Shape</b> super class. This question asks you to refactor your solution to use
+an interface to represent a shape.
+</p>
+<p>
+Use your solution to the previous exercise or the following classes as a starting point for this
+question:</p>
+<ul>
+<li><a href="Shape.java" target="src">Shape.java</a></li>
+<li><a href="Rectangle.java" target="src">Rectangle.java</a></li>
+<li><a href="TestShapes.java" target="src">TestShapes.java</a></li>
+</ul>
+<p>
+Refactor the shape class by extract the <b>getColor</b>() and <b>getArea</b>() methods into an interface
+and gave the <b>Shape</b> class implement this interface. If you rename the <b>Shape</b> class to
+<b>ShapeBase</b> and call the Interface <b>Shape</b> then you need only change the sub class
+name of the super class in sub class definitions (<b>Rectangle</b> et al) - all other code, such the
+test cases, should still work using the <b>Shape</b> type.  
+</p>
+
+<p><a href="solutions.html#Shapes">Solutions</a></p>
+</li>
+
+<li><h2><a id="Stratgey"/>Search Strategy</h2>
+<p>
+The <a href="https://en.wikipedia.org/wiki/Strategy_pattern" target="pattern">Strategy Design Pattern</a>
+is a powerful technique that relies on interfaces. A strategy allows a developer to write a generic algorithm
+within a class whilst allowing consumers of that class to refine the algorithm to meet their specific requirements.
+</p>
+<p>
+A simple search strategy example can be applied to the <b>Drawing</b> class using in a previous exercise on inheritance
+by defining a suitable interface. 
+If you have completed the previous question from this chapter you can use this as your starting point and include
+the following class:
+<ul>
+<li><a href="Drawing.java" target="src">Drawing.java</a></li>
+</ul>
+<p>If you haven't completed the previous question then use your classes from the
+drawing example from the inheritance chapter,
+or the following starter classes :</p>
+<ul>
+<li><a href="Shape.java" target="src">Shape.java</a></li>
+<li><a href="Triangle.java" target="src">Triangle.java</a></li>
+<li><a href="Rectangle.java" target="src">Rectangle.java</a></li>
+</ul>
+<p>
+You are going to define an interface called <b>Selector</b> that will include a single method 
+to decide is a shape should be selected. A suitable signature is:
+</p>
+<pre>
+boolean select(Shape shape);
+</pre>
+<p>
+Extend the <b>Drawing</b> class to include a method that takes a <b>Selector</b> object and
+returns a list of those shapes that have been selected (ie. the <b>select</b> method
+returns <b>true</b>). 
+</p>
+<p>
+Write a test case that adds sample shapes to the <b>Drawing</b> and then define a selector that will
+select some of these shapes (for example blue shapes with an area greater than 5.0) and verify that
+the correct number and total are of the shapes selected agrees wit your test data.
+</p>
+
+<p><a href="solutions.html#Stratgey">Solutions</a></p>
+</li>
+</ol>
+
+		</div>
+
+		<div id="footer">
+			<hr />
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

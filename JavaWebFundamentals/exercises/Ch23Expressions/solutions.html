@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Expressions Solutions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Expressions - Solutions</h1>
+
+			<p>These are suggested solutions for some of the exercises in this
+				chapter. There are
+				usually several ways to solve a problem and the solutions provided
+				illustrate
+				one approach. 
+			</p>
+<ol>
+
+<li><h2><a id="Tables"/>Times Tables</h2>
+<p>First version using <b>println</b>().</p>
+<pre>
+package solutions;
+
+public class MainTables {
+    public static void main(String[] args) {
+        System.out.format(&quot;%4s&quot;, &quot;&quot;);
+        for (int hdr=1; hdr&lt;=12; ++hdr) {
+            System.out.format(&quot;%4d&quot;, hdr);
+        }
+        System.out.println();
+        for (int row=1; row&lt;=12; ++row) {
+            System.out.format(&quot;%4d&quot;, row);
+            for (int col=1; col&lt;=12; ++col) {
+                System.out.format(&quot;%4d&quot;, row*col);
+            }
+            System.out.println();
+        }
+    }
+}
+</pre>
+<p>Second version using <b>StringBuilder</b>().</p>
+<pre>
+package solutions;
+
+public class MainTableBuilder {
+    public static void main(String[] args) {
+        StringBuilder hdr = new StringBuilder("    ");
+        for (int i=1; i<=12; ++i) {
+            hdr.append(String.format("%4d", i));
+        }
+        System.out.println(hdr.toString());
+        for (int row=1; row<=12; ++row) {
+            StringBuilder sb = new StringBuilder(String.format("%4d", row));
+            for (int col=1; col<=12; ++col) {
+                sb.append(String.format("%4d", row*col));
+            }
+            System.out.println(sb.toString());
+        }
+    }
+}
+</pre>
+
+
+
+<p><a href="index.html#Tables">Questions</a></p>
+</li>
+
+<li><h2><a id="Ordnance"/>Projectile Paths</h2>
+<pre>
+package solutions;
+
+public class MainCannon {
+    public static void main(String[] args) {
+        double gravity = 9.81;
+        double velocity = 35;
+        double distance = 100;
+
+        double theta = Math.asin(distance * gravity / Math.pow(velocity,2.0)) / 2.0;
+        System.out.format("Launch angle is %.1f\n", Math.toDegrees(theta));
+
+        double check = 2.0 * Math.pow(velocity,2.0) * Math.cos(theta) * Math.sin(theta) / gravity;
+        System.out.format("Checked range is %.2f\n", check);
+    }
+}
+</pre>
+
+
+
+<p><a href="index.html#Ordnance">Questions</a></p>
+</li>
+
+<li><h2><a id="Guess"/>Guessing Game</h2>
+<p>First version with one guess.</p>
+<pre>
+package solutions;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class MainGuess {
+    public static void main(String[] args) {
+        Random random = new Random();
+        int code = random.nextInt(9)+1;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Guess my code? ");
+        int guess = scanner.nextInt();
+        if (guess == code) {
+            System.out.println("Well done");
+        }
+        else if (guess &gt; code) {
+            System.out.println("Too high");
+        }
+        else {
+            System.out.println("Too low");
+        }
+        System.out.format("My code was %d", code);
+    }
+}
+</pre>
+<p>Second version with multiple guesses.</p>
+<pre>
+package solutions;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class MainGuess {
+    public static void main(String[] args) {
+        Random random = new Random();
+        int code = random.nextInt(9)+1;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Guess my code (zero to give up)? ");
+        int guess = scanner.nextInt();
+        while (guess != 0 &amp;&amp; guess != code) {
+            if (guess == code) {
+                System.out.println("Well done");
+            }
+            else if (guess &gt; code) {
+                System.out.println("Too high");
+            }
+            else {
+                System.out.println("Too low");
+            }
+            System.out.print("Try again? ");
+            guess = scanner.nextInt();
+        }
+        System.out.format("My code was %d", code);
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Guess">Questions</a></p>
+</li>
+
+<li><h2><a id="Check"/>Prime Number Check</h2>
+<p>Solution to read one number.</p>
+<pre>
+package solutions;
+
+import java.util.Scanner;
+
+public class MainPrime {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print(&quot;Enter a number (zero to stop)? &quot;);
+        int number = scanner.nextInt();
+        boolean prime = number == 2 || (number&gt;2) &amp;&amp; number%2 != 0;
+        for (int divisor = 3; prime &amp;&amp; divisor &lt;= number/2; divisor += 2) {
+            prime = number % divisor != 0;
+        }
+        System.out.format(&quot;%d %s prime\n&quot;, number, prime? &quot;is&quot; : &quot;is not&quot;);
+        System.out.print(&quot;next number? &quot;);
+
+    }
+}
+</pre>
+<p>Solution to loop reading numbers.</p>
+<pre>
+package solutions;
+
+import java.util.Scanner;
+
+public class MainPrime {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print(&quot;Enter a number (zero to stop)? &quot;);
+        int number = scanner.nextInt();
+        while (number &gt; 0) {
+            boolean prime = number == 2 || (number&gt;2) &amp;&amp; number%2 != 0;
+            for (int divisor = 3; prime &amp;&amp; divisor &lt;= number/2; divisor += 2) {
+                prime = number % divisor != 0;
+            }
+            System.out.format(&quot;%d %s prime\n&quot;, number, prime? &quot;is&quot; : &quot;is not&quot;);
+            System.out.print(&quot;next number? &quot;);
+            number = scanner.nextInt();
+        }
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Check">Questions</a></p>
+</li>
+
+<li><h2><a id="Haversine"/>Haversine Distances</h2>
+<pre>
+package solutions;
+
+public class MainHaversine {
+    private final static double EARTH_DIAM = 12742;
+
+    public static void main(String[] args) {
+        double extLat = Math.toRadians(50.7344);
+        double extLon = Math.toRadians(-3.4139);
+        double lhrLat = Math.toRadians(51.4775);
+        double lhrLon = Math.toRadians(-0.4614);
+        double a = Math.pow(Math.sin((extLat-lhrLat)/2.0),2) + Math.cos(extLat)*Math.cos(lhrLat)*Math.pow(Math.sin((extLon-lhrLon)/2.0),2);
+        double distance = EARTH_DIAM * Math.atan2(Math.sqrt(a), Math.sqrt(1.0-a));
+        System.out.printf("Exeter to Heathrow is %.2fkm", distance);
+    }
+}
+</pre>
+<p><a href="index.html#Haversine">Questions</a></p>
+</li>
+</ol>
+
+
+		</div>
+
+		<div id="footer">
+			<hr />
+
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

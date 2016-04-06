@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8a033d70-d006-4c08-94a4-cd58b9c0ac38" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/uk/gov/metoffice/training/Countdown.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/uk/gov/metoffice/training/NumberClassifier.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/uk/gov/metoffice/training/TempConversion.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/uk/gov/metoffice/training/TimesTables.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/uk/gov/metoffice/wave/ripple/demo/Main.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/uk/gov/metoffice/wave/ripple/demo/MainOdd.java" />
-    </list>
+    <list default="true" id="8a033d70-d006-4c08-94a4-cd58b9c0ac38" name="Default" comment="" />
     <ignored path="java-web-service-fundamentals.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -697,12 +689,12 @@
       <option name="number" value="Default" />
       <updated>1459930685192</updated>
       <workItem from="1459930689966" duration="1320000" />
-      <workItem from="1459932059863" duration="9141000" />
+      <workItem from="1459932059863" duration="9331000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10461000" />
+    <option name="totallyTimeSpent" value="10651000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />

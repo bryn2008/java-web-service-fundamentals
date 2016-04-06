@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Exceptions Solutions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Exceptions - Solutions</h1>
+
+			<p>These are suggested solutions for some of the exercises in this
+				chapter. There are
+				usually several ways to solve a problem and the solutions provided
+				illustrate
+				one approach. 
+			</p>
+<ol>
+
+<li><h2><a id="XmlFile"/>XML File Data</h2>
+<pre>
+package solutions;
+
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Map;
+import java.util.TreeMap;
+
+public class MainException {
+    private static Map&lt;String, Integer&gt; readElements(String filename) throws IOException, XMLStreamException {
+        Map&lt;String, Integer&gt; elements = new TreeMap&lt;&gt;();
+        XMLInputFactory factory = XMLInputFactory.newInstance();
+        try (FileReader reader = new FileReader(filename)) {
+            XMLStreamReader xml = factory.createXMLStreamReader(reader);
+            while (xml.hasNext()) {
+                int event = xml.next();
+                switch (event) {
+                    case XMLStreamConstants.START_ELEMENT:
+                        switch (xml.getLocalName()) {
+                            case &quot;element&quot;:
+                                int number = Integer.parseInt(xml.getAttributeValue(null, &quot;number&quot;));
+                                String name = xml.getElementText().trim();
+                                elements.put(name, number);
+                                break;
+                        }
+                        break;
+                }
+            }
+        }
+        return elements;
+    }
+
+
+    public static void main(String[] args) {
+        try {
+            Map&lt;String, Integer&gt; elements = readElements(&quot;elements.xml&quot;);
+            System.out.println(elements);
+        }
+        catch (FileNotFoundException ex) {
+            System.err.format(&quot;Cannot read file: %s&quot;, ex.getMessage());
+        }
+        catch (IOException | XMLStreamException ex) {
+            System.err.format(&quot;Error reading XML file: %s&quot;, ex.getMessage());
+        }
+    }
+}
+</pre>
+<p><a href="index.html#XmlFile">Questions</a></p>
+</li>
+</ol>
+
+
+		</div>
+
+		<div id="footer">
+			<hr />
+
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

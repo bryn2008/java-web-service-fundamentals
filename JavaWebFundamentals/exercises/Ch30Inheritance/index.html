@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Inheritance - Questions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Inheritance - Questions</h1>
+
+			<p>
+				These exercises are designed to expand on the topics introduced
+				in the
+				<strong>Inheritance</strong>
+				chapter of the Java Development training course.
+			</p>
+
+			<p>You can attempt the exercises in any order but the later
+				exercises tend to be more complex and require more time to complete. You
+				are not expected to complete all the exercises in the time available.
+				Just do as many as you can do, or want to do, and
+				try to find time after the course has finished to return to complete
+				these exercises. If you are unsure what to do, or need advice
+				as you work through the exercises then please ask your
+				instructor for additional information.</p>
+			
+			<p>The purpose of these exercises is to work with class inheritance and polymorphic
+methods (overriding). These exercises should be attempted in the order they are given
+as you are building a simple graphics management application utilising the Java
+OO design principles.
+</p>
+<p>
+<b>Note</b> that for this and all subsequent exercises you should not create any <b>main</b>
+methods but use JUnit test cases to exercise the functionality of the classes you will
+write. Develop the tests concurrently with the code, writing both feature and test at the
+same time.
+</p>
+<ol>
+
+<li><h2><a id="Exception"/>User Defined Exceptions</h2>
+<p>
+Very few Java applications can be written without using domain specific exceptions (user defined
+exceptions) to report errors. Following the style of the example in the course notes create a
+<b>ShapeException</b> class which sub classes <b>RuntimeException</b>.
+Initially provide one constructor with the parameters:</p>
+<pre>
+ShapeException(String format, Object... args)
+</pre>
+<p>
+This allows an object to be created using a format string and arguments: the body of the constructor
+should pass these parameters to <b>String.format</b> to get the error string required to
+initialise the super class constructor.
+</p>
+<p>Write a JUnit test case that throws this exception with any suitable error message.</p>
+<p>Add a second constructor that has an additional initial argument of an <b>Exception</b>
+so you can warp your domain exception around an underlying problem. Write a JUnit test
+for this exception by writing code that will throw an exception such as:
+</p>
+<pre>
+double width = Double.parseDouble("20mm");
+</pre>
+
+<p><a href="solutions.html#Exception">Solutions</a></p>
+</li>
+
+<li><h2><a id="Shape"/>Generalised Shape</h2>
+<p>Create a class to represent a geometric shape where all shapes have:</p>
+<ul>
+<li>a colour attribute (use the <b>java.awt.Color</b> type to hold the colour)</li>
+<li>an area property</li>
+</ul>
+<p>Provide <i>getter</i> methods for both the colour and the area. As a generic shape has no area
+simply return 0, the sub classes will override this method: the area is a <b>double</b> property.
+</p>
+<p>Write test case to create a shape object and verify it's colour and area.</p> 
+
+<p><a href="solutions.html#Shape">Solutions</a></p>
+</li>
+
+<li><h2><a id="Rectangle"/>Rectangle</h2>
+<p>
+Define a <b>Rectangle</b> sub class of <b>Shape</b> which requires a constructor
+to set the length, width and colour. Validate that the length and width are both
+greater than zero and report errors using your <b>ShapeException</b> class. The area of a
+rectangle is given by:
+</p>
+<img src='rectangle.png' width='246' height='80'/>
+<p>Write test cases for your rectangle class, especially don't forget
+to check the error handling works as expected.
+</p>
+
+<p><a href="solutions.html#Rectangle">Solutions</a></p>
+</li>
+
+<li><h2><a id="Triangle"/>Triangle</h2>
+<p>
+Define a <b>Triangle</b> sub class of <b>Shape</b> which requires a constructor
+to set the sides using a <b>double[]</b>, and colour. Validate that the sides are all
+greater than zero, the triangle is valid, and report errors using your <b>ShapeException</b> class. The area of a
+triangle is given by 
+<a href="https://en.wikipedia.org/wiki/Heron%27s_formula" target=_new>Heron's formula:</a>
+</p>
+<img src='herons.png' width='318' height='148'/>
+<p>Write test cases for your triangle class including
+checks that the error handling works as expected.
+</p>
+
+<p><a href="solutions.html#Triangle">Solutions</a></p>
+</li>
+
+<li><h2><a id="Abstract"/>Refactor Shape to be Abstract</h2>
+<p>
+Refactor your shape class so that it is <b>abstract</b> and replace your dummy
+implementation of <b>getArea</b>(0 with an <b>abstract</b> method. Your shape test case
+should now fail as you can no longer create a <b>Shape</b> object. You should delete this test. 
+</p>
+<p>
+Note that while JUnit supports an <b>@Ignore</b> annotation to temporarily disable a test
+during development it is not applicable in this case as the test is now redundant:
+there is no intention of changing this code to make the test valid again. And, more
+obviously, the test case will no longer compile.
+</p>
+
+<p><a href="solutions.html#Abstract">Solutions</a></p>
+</li>
+
+<li><h2><a id="Drawing"/>Drawing Package</h2>
+<p>
+Create a class to represent a drawing which comprises a list of shapes. Add a method to this
+class to return the total area of all the shapes: <b>double getShapeArea()</b>. Write a test
+case to add 5 shapes (some rectangle and some triangles) to the drawing and validate the
+area of all the added shapes.
+</p>
+
+<p><a href="solutions.html#Drawing">Solutions</a></p>
+</li>
+
+<li><h2><a id="Enum"/>Add Enumerated Triangle Type</h2>
+<p>
+Refactor your triangle class to include a <b>getCategory</b>() method that
+returns the category (type) of triangle: plain, isosceles, equilateral or right-angled. 
+To simplify the problem, a triangle can only belong to one category so an isoceles right angled triangle will
+be considered to be isosceles. Use an <b>enum</b> to represent the triangle
+category (create the <b>enum</b> as a nested <b>public static class</b> in the <b>Triangle</b>
+class. Write test cases for different categories of tiangle.
+</p>
+
+<p><a href="solutions.html#Enum">Solutions</a></p>
+</li>
+</ol>
+
+		</div>
+
+		<div id="footer">
+			<hr />
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

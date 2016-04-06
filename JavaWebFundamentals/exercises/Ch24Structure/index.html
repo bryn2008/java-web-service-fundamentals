@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Program Structure - Questions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Program Structure - Questions</h1>
+
+			<p>
+				These exercises are designed to expand on the topics introduced
+				in the
+				<strong>Program Structure</strong>
+				chapter of the Java Development training course.
+			</p>
+
+			<p>You can attempt the exercises in any order but the later
+				exercises tend to be more complex and require more time to complete. You
+				are not expected to complete all the exercises in the time available.
+				Just do as many as you can do, or want to do, and
+				try to find time after the course has finished to return to complete
+				these exercises. If you are unsure what to do, or need advice
+				as you work through the exercises then please ask your
+				instructor for additional information.</p>
+			
+			<p>The purpose of these exercises is to ...
+</p>
+<ol>
+
+<li><h2><a id="Guess"/>Guessing Game</h2>
+<p>
+Generate a random integer between 1 and 9 (inclusive). Using a <b>do-while</b>
+loop enter the loop and prompt the user to
+guess the number. If the user guesses correctly print out <i>Good Guess</i>
+and <b>break</b> out of the loop. If their guess
+was not zero print out whether their guess was lower or higher then the
+generated number and loop round again if the guess is not equal to zero.
+</p>
+
+<p><a href="solutions.html#Guess">Solutions</a></p>
+</li>
+
+<li><h2><a id="Ordnance"/>Projectile Paths</h2>
+<p>The path of projectiles such as a cannon ball (or an angry bird) when
+ignoring air resistance is given by several equations:
+</p>
+<img src='ordnance.png' width='600' height='155'/>
+<p>
+<p>Write a function to help your armourers:</p>
+<ol>
+<li>call the function <b>launchAngle</b>()</li>
+<li>pass the velocity as the first parameter</li>
+<li>pass the required range as the second parameter</li>
+<li>return the calculated launch angle theta in degrees rounded to the nearest whole number</li>
+</ol>
+<p>Note that the <b>Math</b> trigonometric functions work in radians so
+you will need to convert the calculated angle <i>to degrees</i>.
+</p>
+<p>Write a program that uses your function to calculate the launch angle theta for 
+a range of 1000m with an initial velocity of 100.0 m/s.
+</p>
+<p>
+Write a second function <b>calcRange</b>() that will return the range given two parameters of 
+initial velocity and launch angle (in degrees). Verify your 
+original launch angle by passing
+this (with an initial velocity of 100.0 m/s) into this function to check you
+get back the original range of 1000m, if not can you explain why you don't get back
+the original range?
+</p>
+
+<p><a href="solutions.html#Ordnance">Solutions</a></p>
+</li>
+
+<li><h2><a id="Counting"/>Traditional Counting System</h2>
+<p> 
+It is known that some traditional cultures only have words for one, two, and many. To
+illustrate a variation on this counting system
+this write a program to use a <b>for</b> loop to generate 10
+random numbers between 1 and 10 using <b>random.nextInt(10)+1</b>. Inside the
+loop use a <b>switch</b> statement to map the following numbers to names:
+</p>
+<ul>
+<li><b>1</b> - one</li>
+<li><b>2</b> - two</li>
+<li><b>10</b> - two hands full</li>
+<li><i>all other numbers</i> - many</li>
+</ul>
+<p>
+If you have Internet access there is an early <a href="https://xkcd.com/764/"  target="_new">XKCD page</a> showing
+traditional counting systems.
+</p>
+
+<p><a href="solutions.html#Counting">Solutions</a></p>
+</li>
+
+<li><h2><a id="Overload"/>Overloaded Random Number Generators</h2>
+<p>
+This question is an example of using overloaded method  where the same method name, in this
+case <b>generator</b>, is defined with different parameter lists so that the
+method signature (name combined with the parameter types) is unique.
+</p>
+<p>
+Define a class method (<b>private static</b>) called <b>generate</b> that accepts a 
+single <b>int</b> parameter and returns a random integer between 1 and the value of the
+parameter.
+</p>
+<p>
+Define a second <b>generate</b> method that accepts two <b>int</b> parameters and returns
+a random integer between these values (inclusive). 
+</p>
+<p>You should create a <b>final</b> 
+class level variable to hold the <b>Random</b> object so that it is shared bewteen
+the methods, rather than have each method create a new <b>Random</b> object each time they
+are called.
+</p>
+<p>
+You should be able to call these methods as follows:</p>
+<pre>
+System.out.println(generate(10));
+System.out.println(generate(1,59));
+</pre>
+
+<p><a href="solutions.html#Overload">Solutions</a></p>
+</li>
+</ol>
+
+		</div>
+
+		<div id="footer">
+			<hr />
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

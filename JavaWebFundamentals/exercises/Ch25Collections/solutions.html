@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Collections Solutions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Collections - Solutions</h1>
+
+			<p>These are suggested solutions for some of the exercises in this
+				chapter. There are
+				usually several ways to solve a problem and the solutions provided
+				illustrate
+				one approach. 
+			</p>
+<ol>
+
+<li><h2><a id="Lottery"/>UK Lottery</h2>
+<pre>
+package training;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class MainLottery {
+    static final int SIZE = 6;
+    static final int LO = 1;
+    static final int HI = 59;
+
+    public static void main(String[] args) {
+        Random random = new Random();
+        List&lt;Integer&gt; numbers = new ArrayList&lt;&gt;();
+        while (numbers.size() &lt; SIZE) {
+            int n = random.nextInt(HI-LO)+LO;
+            if (! numbers.contains(n)) {
+                numbers.add(n);
+            }
+        }
+        System.out.println(numbers);
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Lottery">Questions</a></p>
+</li>
+
+<li><h2><a id="Tables"/>Times Tables</h2>
+<pre>
+package solutions;
+
+public class MainTables {
+    private static final int[] TABLE = {1,2,3,4,5,6,7,8,9,10,11,12};
+    public static void main(String[] args) {
+        System.out.printf("%4s", "");
+        for (int hdr : TABLE) {
+            System.out.println(String.format("%4d", hdr));
+        }
+        System.out.println();
+        for (int row : TABLE) {
+            System.out.printf("%4d", row);
+            for (int col : TABLE) {
+                System.out.println(String.format("%4d", row*col));
+            }
+            System.out.println();
+        }
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Tables">Questions</a></p>
+</li>
+
+<li><h2><a id="Haversine"/>Haversine Distances</h2>
+<pre>
+package solutions;
+
+public class MainHaversine {
+    private final static double EARTH_DIAM = 12742;
+
+    private final static double calcHaversine(double[] srcDeg, double[] dstDeg){
+        double[] src = { Math.toRadians(srcDeg[0]), Math.toRadians(srcDeg[1])};
+        double[] dst = { Math.toRadians(dstDeg[0]), Math.toRadians(dstDeg[1])};
+        double a = Math.pow(Math.sin((src[0]-dst[0])/2.0),2) + Math.cos(src[0])*Math.cos(dst[0])*Math.pow(Math.sin((src[1]-dst[1])/2.0),2);
+        return EARTH_DIAM * Math.atan2(Math.sqrt(a), Math.sqrt(1.0-a));
+    }
+    public static void main(String[] args) {
+        double distance = calcHaversine(new double[]{50.7344, -3.4139}, new double[]{51.4775, -0.4614});
+        System.out.printf("Exeter to Heathrow is %.2fkm", distance);
+    }
+}
+</pre>
+
+
+<p><a href="index.html#Haversine">Questions</a></p>
+</li>
+
+<li><h2><a id="RPC"/>Rock Paper Scissors</h2>
+<pre>
+package solutions;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+
+public class MainRps {
+    private static final List&lt;String&gt; CHOICES = Arrays.asList("rock", "paper", "scissors", "quit");
+    private static final String LETTERS = "rpsq";
+    private static final int QUIT_N = 3;
+    private static final String WIN = "you win";
+    private static final String LOSE = "I win";
+    private static final String DRAW = "Draw";
+
+    private static final String[][] DECISION = {
+            // user rock paper scissors
+            {DRAW, WIN, LOSE}, // rock
+            {LOSE, DRAW, WIN}, // paper
+            {WIN, LOSE, DRAW}, // scissors
+    };
+
+    private static int readChoice() {
+        Scanner scanner = new Scanner(System.in);
+        for (;;) {
+            System.out.print("Choose r)ock, p)aper, s)cissors or q)uit? ");
+            String choice = scanner.nextLine().trim().toLowerCase();
+            int n = -1;
+            if (choice.length() == 1) {
+                n = LETTERS.indexOf(choice);
+            }
+            else {
+                n = CHOICES.indexOf(choice);
+            }
+            if (n != -1 ) {
+                return n;
+            }
+            System.out.println("Invalid choice, try again");
+        }
+    }
+
+    public static void main(String[] args) {
+        Random random = new Random();
+        int choice = readChoice();
+        while (choice != QUIT_N) {
+            int hidden = random.nextInt(QUIT_N);
+            String outcome = DECISION[hidden][choice];
+            System.out.printf("I chose %s against your %s: %s\n",
+                    CHOICES.get(hidden), CHOICES.get(choice), outcome);
+            if (! outcome.equals(DRAW)) {
+                break;
+            }
+            choice = readChoice();
+        }
+    }
+}
+</pre>
+
+
+<p><a href="index.html#RPC">Questions</a></p>
+</li>
+
+<li><h2><a id="Dealer"/>Poker School</h2>
+<pre>
+package solutions;
+
+import java.util.*;
+
+public class MainCards {
+    private static void shuffle(List&lt;Integer&gt; cards) {
+       Random random = new Random();
+       for (int i=0; i&lt;cards.size(); ++i) {
+           int swap = random.nextInt(cards.size());
+           Integer temp = cards.get(swap);
+           cards.set(swap, cards.get(i));
+           cards.set(i, temp);
+       }
+    }
+
+    private static void deal (List&lt;Integer&gt; deck, List&lt;List&lt;Integer&gt;&gt; hands, int nCards) {
+        for (int i=0; i&lt;nCards; ++i) {
+            for (List&lt;Integer&gt; hand: hands) {
+                hand.add(deck.remove(0));
+            }
+        }
+    }
+
+    private static final String SUITS = &quot;CDHS&quot;;
+    private static final String VALUES = &quot;A23456789TJQK&quot;;
+    private static void printCards(String name, List&lt;Integer&gt; cards) {
+        System.out.format(&quot;%-10s:&quot;,name);
+        for (int card : cards) {
+            System.out.format(&quot; %s%s&quot;, VALUES.charAt(card/13), SUITS.charAt(card%4));
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        // Java 8 streams        // List&lt;Integer&gt; deck = IntStream.rangeClsed(0, 51)
+        //        .boxed().collect(Collectors.toLst());
+        List&lt;Integer&gt; deck = new ArrayList&lt;&gt;(52);
+        for (int i=0; i&lt;52; ++i)
+            deck.add(i);
+        shuffle(deck);
+        List&lt;List&lt;Integer&gt;&gt; players = Arrays.asList(new ArrayList&lt;&gt;(), new ArrayList&lt;&gt;(), new ArrayList&lt;&gt;());
+        deal (deck, players, 5);
+        printCards(&quot;Doyle&quot;, players.get(0));
+        printCards(&quot;Bill&quot;, players.get(1));
+        printCards(&quot;Henry&quot;, players.get(2));
+        printCards(&quot;Deck&quot;, deck);
+    }
+
+}
+</pre>
+<p><a href="index.html#Dealer">Questions</a></p>
+</li>
+</ol>
+
+
+		</div>
+
+		<div id="footer">
+			<hr />
+
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>

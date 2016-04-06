@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Exceptions - Questions</title>
+		<style type="text/css">
+		</style>
+		<link rel="stylesheet" href="../../etc/oldfrog.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<div id="header">
+			<a href="../../index.html">
+				<img alt="Training Logo" src="../../etc/logo96.png" 
+height="96" width="96">
+			</a>
+			<span class="right">
+				<a href="../index.html">
+					<img alt="Up arrow" src="../../etc/arrow-up.png" height="96"
+						width="122">
+				</a>
+			</span>
+			<hr />
+		</div>
+
+		<div id="body">
+			<h1>Exceptions - Questions</h1>
+
+			<p>
+				These exercises are designed to expand on the topics introduced
+				in the
+				<strong>Exceptions</strong>
+				chapter of the Java Development training course.
+			</p>
+
+			<p>You can attempt the exercises in any order but the later
+				exercises tend to be more complex and require more time to complete. You
+				are not expected to complete all the exercises in the time available.
+				Just do as many as you can do, or want to do, and
+				try to find time after the course has finished to return to complete
+				these exercises. If you are unsure what to do, or need advice
+				as you work through the exercises then please ask your
+				instructor for additional information.</p>
+			
+			<p>The purpose of these exercises is to work with exceptions
+to write programs that recovers exceptions and write code to report
+errors using exceptions.
+</p>
+<ol>
+
+<li><h2><a id="XmlFile"/>XML File Data</h2>
+<p>
+Reading XML data files is a classic situation where different exceptions can be generated. 
+An incorrect filename throws a <b>FileNotFoundException</b>, problems reading from the
+file are unlikely to happen but may throw an <b>IOException</b>, and finally
+if the XML itself is badly formed and cannot be parsed that will throw aother type of
+exception. Using the StAX API for XML may throw an <b>XMLStreamException</b>.
+<p>
+As an example the following XML file defines a list of atomic elements:
+</p>
+<pre>
+<?xml version="1.0" encoding="UTF-8"?>
+&lt;elements&gt;
+    &lt;element number=&quot;1&quot; abbreviation=&quot;H&quot;&gt;Hydrogen&lt;/element&gt;
+    &lt;element number=&quot;2&quot; abbreviation=&quot;He&quot;&gt;Helium&lt;/element&gt;
+    &lt;element number=&quot;3&quot; abbreviation=&quot;Li&quot;&gt;Lithium&lt;/element&gt;
+    &lt;element number=&quot;4&quot; abbreviation=&quot;Be&quot;&gt;Beryllium&lt;/element&gt;
+    &lt;element number=&quot;5&quot; abbreviation=&quot;B&quot;&gt;Boron&lt;/element&gt;
+    &lt;element number=&quot;6&quot; abbreviation=&quot;C&quot;&gt;Carbon&lt;/element&gt;
+    &lt;element number=&quot;7&quot; abbreviation=&quot;N&quot;&gt;Nitrogen&lt;/element&gt;
+    &lt;element number=&quot;8&quot; abbreviation=&quot;O&quot;&gt;Oxygen&lt;/element&gt;
+    &lt;element number=&quot;9&quot; abbreviation=&quot;F&quot;&gt;Fluorine&lt;/element&gt;
+    &lt;element number=&quot;10&quot; abbreviation=&quot;Ne&quot;&gt;Neon&lt;/element&gt;
+&lt;/elements&gt;
+</pre>
+<p>
+The following starter code shows how to build a dictionary keyed by element name holding the
+atomic number but does not include any error handling so will not compile: 
+</p>
+<pre>
+private static Map<String, Integer> readElements(String filename) {
+    Map<String, Integer> elements = new TreeMap<>();
+    XMLInputFactory factory = XMLInputFactory.newInstance();
+    FileReader reader = new FileReader(filename);
+    XMLStreamReader xml = factory.createXMLStreamReader(reader);
+    while (xml.hasNext()) {
+        int event = xml.next();
+        switch (event) {
+            case XMLStreamConstants.START_ELEMENT:
+                switch(xml.getLocalName()) {
+                    case "element":
+                        int number = Integer.parseInt(xml.getAttributeValue(null, "number"));
+                        String name = xml.getElementText().trim();
+                        elements.put(name, number);
+                        break;
+                }
+                break;
+        }
+    }
+    reader.close();
+    return elements;
+}
+
+public static void main(String[] args) {
+    Map<String, Integer> elements = readElements("elements.xml");
+    System.out.println(elements);
+}
+</pre>
+<p>
+Start with this code and make the following changes to the <b>readElements</b> method:</p>
+<ul>
+<li>Move the declaration of the <b>FileReader</b> object into a <i>try with resources</i> block and remove the
+(now) redundant <b>reader.close();</b> statement</li>
+<li>Add a <b>throws</b> clause to the method for the <b>IOException</b> and <b>XMLStreamException</b> exceptions</li>
+</ul>
+<p>
+Start with this code and make the following changes to the <b>main</b> method:</p>
+<ul>
+<li>wrap the code in a <b>try</b> block</li>
+<li>add a <b>catch</b> block for <b>FileNotFoundException</b> and display an error message 
+indicating the filename was incorrect</li>
+<li>Add a second <b>catch</b> block for both <b>IOException</b> and <b>XMLStreamException</b>
+and print out the underlying error message using <b>Exception.getMessage</b>().</li>
+</ul>
+
+<p><a href="solutions.html#XmlFile">Solutions</a></p>
+</li>
+</ol>
+
+		</div>
+
+		<div id="footer">
+			<hr />
+			<p>
+				<span class="left">
+					<a href="../index.html">Parent Page</a>
+				</span>
+				<span class="right">© Old Frog Limited 2016</span>
+			</p>
+		</div>
+	</body>
+</html>
